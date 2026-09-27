@@ -1,5 +1,15 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
@@ -8,6 +18,17 @@ body {
   background: #f5f7fb;
   color: #1f2937;
 }
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   JOB PAGE
+   ========================================================= */
 
 .job-page {
   min-height: 100vh;
@@ -40,6 +61,11 @@ body {
   gap: 18px;
 }
 
+
+/* =========================================================
+   JOB CARD
+   ========================================================= */
+
 .job-card {
   width: 100%;
   padding: 24px;
@@ -57,9 +83,11 @@ body {
   width: 64px;
   height: 64px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: #f1f5f9;
   border-radius: 12px;
   overflow: hidden;
@@ -80,9 +108,12 @@ body {
 
 .job-information {
   flex: 1;
+
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  min-width: 0;
 }
 
 .company-name {
@@ -116,10 +147,572 @@ body {
 .empty-state {
   padding: 60px 20px;
   text-align: center;
+
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
+
+/* =========================================================
+   APPLICATION FORM
+   ========================================================= */
+
+.application-company {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.application-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.application-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.application-full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   FLUENT UI FORM FIELDS
+   ========================================================= */
+
+.application-form .fui-Field {
+  width: 100%;
+}
+
+.application-form .fui-Field__label {
+  margin-bottom: 7px !important;
+  color: #334155 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.application-form .fui-Input {
+  width: 100% !important;
+  min-height: 42px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+.application-form .fui-Input__input {
+  width: 100% !important;
+  font-size: 14px !important;
+}
+
+
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
+
+.application-form .fui-Textarea {
+  width: 100% !important;
+  min-height: 120px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+.application-form .fui-Textarea__textarea {
+  width: 100% !important;
+  min-height: 120px !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.application-error {
+  display: block;
+  margin-top: 5px;
+  color: #d13438;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+
+/* =========================================================
+   APPLICATION FORM DIALOG
+   ========================================================= */
+
+.application-dialog-surface {
+  width: min(680px, calc(100vw - 32px)) !important;
+  max-width: 680px !important;
+  max-height: calc(100vh - 40px) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.18),
+    0 4px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+.application-dialog-body {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 !important;
+}
+
+.application-dialog-title {
+  position: relative;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin: 0 !important;
+  padding: 22px 28px 18px !important;
+
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 1.3;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  color: #111827;
+}
+
+.application-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #64748b;
+
+  font-size: 26px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.application-close-button:hover {
+  background: #f1f5f9;
+  color: #111827;
+}
+
+.application-dialog-content {
+  width: 100% !important;
+
+  max-height: calc(100vh - 190px) !important;
+
+  margin: 0 !important;
+  padding: 24px 28px !important;
+
+  overflow-y: auto !important;
+
+  box-sizing: border-box !important;
+}
+
+.application-dialog-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.application-dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.application-dialog-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+.application-dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.application-dialog-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  gap: 10px !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+  padding: 16px 28px 20px !important;
+
+  border-top: 1px solid #e5e7eb;
+
+  background: #ffffff;
+}
+
+.application-dialog-actions button {
+  min-height: 40px;
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   APPLICATION SUCCESS
+   ========================================================= */
+
+.application-success {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.application-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+  color: #16a34a;
+
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.application-success h3 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.application-success p {
+  margin: 6px 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   APPLICATION DETAILS MODAL
+   ========================================================= */
+
+.application-details-dialog {
+  width: min(700px, calc(100vw - 32px)) !important;
+  max-width: 700px !important;
+
+  max-height: calc(100vh - 32px) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.20),
+    0 4px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+
+/* =========================================================
+   DETAILS MODAL BODY
+   ========================================================= */
+
+.application-details-dialog .fui-DialogBody {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  padding: 0 !important;
+
+  overflow: hidden !important;
+}
+
+
+/* =========================================================
+   DETAILS MODAL TITLE
+   ========================================================= */
+
+.application-details-dialog .fui-DialogTitle {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 22px 28px 18px !important;
+
+  color: #111827 !important;
+
+  font-size: 22px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.3 !important;
+
+  border-bottom: 1px solid #e5e7eb !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   DETAILS MODAL CONTENT
+   ========================================================= */
+
+.application-details-dialog .fui-DialogContent {
+  width: 100% !important;
+
+  max-width: 100% !important;
+
+  max-height: calc(100vh - 180px) !important;
+
+  margin: 0 !important;
+
+  padding: 24px 28px !important;
+
+  overflow-y: auto !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Details scrollbar */
+
+.application-details-dialog
+  .fui-DialogContent::-webkit-scrollbar {
+  width: 7px;
+}
+
+.application-details-dialog
+  .fui-DialogContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.application-details-dialog
+  .fui-DialogContent::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+.application-details-dialog
+  .fui-DialogContent::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   DETAILS CONTENT
+   ========================================================= */
+
+.application-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 100%;
+}
+
+.application-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 18px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+
+/* =========================================================
+   DETAILS SECTION TITLE
+   ========================================================= */
+
+.application-details-section > .fui-Text {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #0f172a !important;
+
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   DETAIL ROW
+   ========================================================= */
+
+.application-detail-row {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 24px;
+
+  width: 100%;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.application-detail-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.application-detail-row span {
+  flex: 0 0 auto;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.application-detail-row strong {
+  min-width: 0;
+
+  max-width: 70%;
+
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  text-align: right;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ABOUT ME
+   ========================================================= */
+
+.application-about-me {
+  width: 100%;
+
+  padding-top: 2px;
+
+  color: #475569;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   DETAILS MODAL ACTIONS
+   ========================================================= */
+
+.application-details-dialog .fui-DialogActions {
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  gap: 10px !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 16px 28px 20px !important;
+
+  border-top: 1px solid #e5e7eb !important;
+
+  background: #ffffff !important;
+
+  box-sizing: border-box !important;
+}
+
+.application-details-dialog .fui-DialogActions button {
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRINT / PDF AREA
+   ========================================================= */
+
+#application-print-area {
+  width: 100%;
+}
+
+#application-print-area .application-details-section {
+  break-inside: avoid;
+}
+
+
+/* =========================================================
+   MOBILE - JOB PAGE
+   ========================================================= */
 
 @media (max-width: 700px) {
   .job-page {
@@ -148,436 +741,24 @@ body {
   }
 }
 
-.application-company {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 24px;
-}
 
-.application-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.application-full-width {
-  grid-column: 1 / -1;
-}
-
-.application-success {
-  padding: 24px;
-  margin: 20px 0;
-  border-radius: 10px;
-  background: #f0fdf4;
-  border: 1px solid #86efac;
-}
-
-.application-success h3 {
-  margin-top: 0;
-}
+/* =========================================================
+   MOBILE - APPLICATION FORM
+   ========================================================= */
 
 @media (max-width: 600px) {
   .application-form-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .application-full-width {
     grid-column: auto;
   }
-}
-
-/* =========================================================
-   APPLICATION MODAL
-   ========================================================= */
-
-/* Dialog surface */
-
-.application-dialog-surface {
-  width: min(680px, calc(100vw - 32px)) !important;
-  max-width: 680px !important;
-
-  max-height: calc(100vh - 40px) !important;
-
-  margin: 0 !important;
-  padding: 0 !important;
-
-  overflow: hidden !important;
-
-  border-radius: 16px !important;
-
-  background: #ffffff !important;
-
-  box-shadow:
-    0 20px 60px rgba(15, 23, 42, 0.18),
-    0 4px 16px rgba(15, 23, 42, 0.08) !important;
-}
-
-
-/* Dialog body */
-
-.application-dialog-body {
-  width: 100%;
-  max-width: 100%;
-  padding: 0 !important;
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.application-dialog-title {
-  position: relative;
-
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-
-  margin: 0 !important;
-  padding: 22px 28px 18px !important;
-
-  font-size: 22px !important;
-  font-weight: 700 !important;
-
-  line-height: 1.3;
-
-  border-bottom: 1px solid #e5e7eb;
-
-  color: #111827;
-}
-
-
-/* Close button */
-
-.application-close-button {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 34px;
-  height: 34px;
-
-  padding: 0;
-
-  border: none;
-  border-radius: 8px;
-
-  background: transparent;
-
-  color: #64748b;
-
-  font-size: 26px;
-  line-height: 1;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.application-close-button:hover {
-  background: #f1f5f9;
-  color: #111827;
-}
-
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
-
-.application-dialog-content {
-  width: 100% !important;
-
-  max-height: calc(100vh - 190px) !important;
-
-  margin: 0 !important;
-
-  padding: 24px 28px !important;
-
-  overflow-y: auto !important;
-
-  box-sizing: border-box !important;
-}
-
-
-/* Custom scrollbar */
-
-.application-dialog-content::-webkit-scrollbar {
-  width: 7px;
-}
-
-.application-dialog-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.application-dialog-content::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 20px;
-}
-
-.application-dialog-content::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-
-/* =========================================================
-   JOB INFORMATION
-   ========================================================= */
-
-.application-job-info {
-  margin-bottom: 24px;
-
-  padding: 16px 18px;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 10px;
-
-  background: #f8fafc;
-}
-
-.application-job-title {
-  margin-bottom: 4px;
-
-  color: #0f172a;
-
-  font-size: 17px;
-
-  font-weight: 700;
-
-  line-height: 1.4;
-}
-
-.application-company {
-  color: #64748b;
-
-  font-size: 14px;
-
-  line-height: 1.5;
-}
-
-
-/* =========================================================
-   FORM
-   ========================================================= */
-
-.application-form {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 18px;
-
-  width: 100%;
-}
-
-
-/* First name / Last name */
-
-.application-form-grid {
-  display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  gap: 18px;
-
-  width: 100%;
-}
-
-
-/* =========================================================
-   FLUENT UI FIELD
-   ========================================================= */
-
-.application-form .fui-Field {
-  width: 100%;
-}
-
-
-/* Labels */
-
-.application-form .fui-Field__label {
-  margin-bottom: 7px !important;
-
-  color: #334155 !important;
-
-  font-size: 14px !important;
-
-  font-weight: 600 !important;
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-.application-form .fui-Input {
-  width: 100% !important;
-
-  min-height: 42px !important;
-
-  border-radius: 8px !important;
-
-  box-sizing: border-box !important;
-}
-
-
-/* Input element */
-
-.application-form .fui-Input__input {
-  width: 100% !important;
-
-  font-size: 14px !important;
-}
-
-
-/* Textarea */
-
-.application-form .fui-Textarea {
-  width: 100% !important;
-
-  min-height: 120px !important;
-
-  border-radius: 8px !important;
-
-  box-sizing: border-box !important;
-}
-
-.application-form .fui-Textarea__textarea {
-  width: 100% !important;
-
-  min-height: 120px !important;
-
-  font-size: 14px !important;
-
-  line-height: 1.5 !important;
-}
-
-
-/* =========================================================
-   ERROR MESSAGE
-   ========================================================= */
-
-.application-error {
-  display: block;
-
-  margin-top: 5px;
-
-  color: #d13438;
-
-  font-size: 12px;
-
-  line-height: 16px;
-}
-
-
-/* =========================================================
-   FOOTER / ACTIONS
-   ========================================================= */
-
-.application-dialog-actions {
-  display: flex !important;
-
-  align-items: center !important;
-
-  justify-content: flex-end !important;
-
-  gap: 10px !important;
-
-  width: 100% !important;
-
-  margin: 0 !important;
-
-  padding: 16px 28px 20px !important;
-
-  border-top: 1px solid #e5e7eb;
-
-  background: #ffffff;
-}
-
-
-/* Buttons */
-
-.application-dialog-actions button {
-  min-height: 40px;
-
-  padding: 0 18px;
-
-  border-radius: 8px;
-
-  font-size: 14px;
-
-  font-weight: 600;
-}
-
-
-/* =========================================================
-   SUCCESS
-   ========================================================= */
-
-.application-success {
-  padding: 40px 20px;
-
-  text-align: center;
-}
-
-.application-success-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 64px;
-  height: 64px;
-
-  margin: 0 auto 18px;
-
-  border-radius: 50%;
-
-  background: #dcfce7;
-
-  color: #16a34a;
-
-  font-size: 32px;
-
-  font-weight: 700;
-}
-
-.application-success h3 {
-  margin: 0 0 10px;
-
-  color: #111827;
-
-  font-size: 20px;
-}
-
-.application-success p {
-  margin: 6px 0;
-
-  color: #64748b;
-
-  font-size: 14px;
-
-  line-height: 1.6;
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
 
   .application-dialog-surface {
     width: calc(100vw - 24px) !important;
-
     max-width: none !important;
-
     max-height: calc(100vh - 24px) !important;
 
     border-radius: 12px !important;
@@ -585,20 +766,12 @@ body {
 
   .application-dialog-title {
     padding: 18px 20px 16px !important;
-
     font-size: 19px !important;
   }
 
   .application-dialog-content {
     max-height: calc(100vh - 170px) !important;
-
     padding: 20px !important;
-  }
-
-  .application-form-grid {
-    grid-template-columns: 1fr;
-
-    gap: 18px;
   }
 
   .application-dialog-actions {
@@ -612,91 +785,337 @@ body {
 
 
 /* =========================================================
-   VERY SMALL SCREENS
+   MOBILE - APPLICATION DETAILS
    ========================================================= */
-
-@media (max-width: 400px) {
-
-  .application-dialog-surface {
-    width: calc(100vw - 16px) !important;
-  }
-
-  .application-dialog-content {
-    padding: 16px !important;
-  }
-
-  .application-dialog-title {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .application-dialog-actions {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-}
-
-.application-details-dialog {
-  width: min(700px, calc(100vw - 32px));
-  max-width: 700px;
-}
-
-.application-details {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.application-details-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 18px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #ffffff;
-}
-
-.application-detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.application-detail-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.application-detail-row span {
-  color: #64748b;
-}
-
-.application-detail-row strong {
-  text-align: right;
-  color: #1e293b;
-}
-
-.application-about-me {
-  color: #475569;
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
 
 @media (max-width: 600px) {
   .application-details-dialog {
-    width: calc(100vw - 24px);
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+
+    max-height: calc(100vh - 24px) !important;
+
+    border-radius: 12px !important;
+  }
+
+  .application-details-dialog .fui-DialogTitle {
+    padding: 18px 20px 16px !important;
+
+    font-size: 19px !important;
+  }
+
+  .application-details-dialog .fui-DialogContent {
+    max-height: calc(100vh - 170px) !important;
+
+    padding: 20px !important;
+  }
+
+  .application-details {
+    gap: 16px;
+  }
+
+  .application-details-section {
+    padding: 16px;
+
+    border-radius: 10px;
   }
 
   .application-detail-row {
     flex-direction: column;
+
+    align-items: flex-start;
+
     gap: 4px;
   }
 
+  .application-detail-row span {
+    font-size: 13px;
+  }
+
   .application-detail-row strong {
+    max-width: 100%;
+
     text-align: left;
+  }
+
+  .application-details-dialog .fui-DialogActions {
+    padding: 14px 20px 18px !important;
+
+    flex-wrap: wrap;
+  }
+
+  .application-details-dialog .fui-DialogActions button {
+    flex: 1;
+
+    min-width: 100px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .application-dialog-surface,
+  .application-details-dialog {
+    width: calc(100vw - 16px) !important;
+  }
+
+  .application-dialog-content,
+  .application-details-dialog .fui-DialogContent {
+    padding: 16px !important;
+  }
+
+  .application-dialog-title,
+  .application-details-dialog .fui-DialogTitle {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .application-dialog-actions,
+  .application-details-dialog .fui-DialogActions {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* =========================================================
+   APPLICATION DETAILS MODAL - ACTION BUTTONS
+   ========================================================= */
+
+.application-dialog-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  padding: 16px 24px !important;
+  border-top: 1px solid #e5e7eb !important;
+  background: #ffffff !important;
+  width: 100% !important;
+}
+
+.application-dialog-button {
+  min-width: 90px !important;
+  min-height: 40px !important;
+  padding: 8px 18px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease !important;
+}
+
+/* Print + Download PDF */
+.application-dialog-button[appearance="secondary"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.application-dialog-button[appearance="secondary"]:hover {
+  background-color: #f3f4f6 !important;
+  border-color: #9ca3af !important;
+}
+
+/* Close */
+.application-dialog-button[appearance="primary"] {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+}
+
+.application-dialog-button[appearance="primary"]:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+
+.application-dialog-button:active {
+  transform: scale(0.98) !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .application-dialog-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 14px 16px !important;
+  }
+
+  .application-dialog-button {
+    width: 100% !important;
+  }
+}
+
+/* =========================================================
+   MY APPLICATIONS
+   ========================================================= */
+
+.applications-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 24px;
+}
+
+.applications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.applications-subtitle {
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.applications-list {
+  display: grid;
+  gap: 16px;
+}
+
+.application-card {
+  width: 100%;
+  padding: 20px;
+}
+
+.application-card-header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.application-card-header
+  [data-slot="content"] {
+  width: 100%;
+}
+
+.application-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.application-card-content {
+  margin-top: 16px;
+}
+
+.application-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  color: #64748b;
+}
+
+.application-meta strong {
+  color: #1f2937;
+}
+
+.application-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.applications-empty {
+  padding: 60px 24px;
+  text-align: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.applications-empty
+  [data-slot="content"] {
+  color: #64748b;
+}
+
+.applications-empty
+  [data-slot="content"]:first-child {
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .applications-section {
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  .applications-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .application-card-header {
+    flex-direction: column;
+  }
+
+  .application-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .application-actions {
+    flex-direction: column;
+  }
+
+  .application-actions button {
+    width: 100%;
+  }
+
+  .applications-header > button {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   APPLICATION SEARCH
+========================================= */
+
+.applications-search {
+  width: 100%;
+  margin: 20px 0 10px;
+}
+
+.applications-search .fui-Input {
+  width: 100%;
+}
+
+.applications-search-result {
+  margin-bottom: 14px;
+  color: #64748b;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .applications-search {
+    margin: 16px 0 10px;
   }
 }

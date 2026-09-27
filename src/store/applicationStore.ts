@@ -6,19 +6,20 @@ import {
 
 import type { ApplicationData } from "../types/application";
 
-// -----------------------------------------
-// Application Status
-// -----------------------------------------
+/* =========================================================
+   Application Status
+========================================================= */
 
 export type ApplicationStatus =
   | "Applied"
+  | "Under Review"
   | "Interview"
-  | "Rejected"
-  | "Offer";
+  | "Selected"
+  | "Rejected";
 
-// -----------------------------------------
-// Job Application
-// -----------------------------------------
+/* =========================================================
+   Job Application
+========================================================= */
 
 export interface JobApplication
   extends ApplicationData {
@@ -29,9 +30,9 @@ export interface JobApplication
   status: ApplicationStatus;
 }
 
-// -----------------------------------------
-// Store
-// -----------------------------------------
+/* =========================================================
+   Application Store
+========================================================= */
 
 interface ApplicationStore {
   applications: JobApplication[];
@@ -42,29 +43,33 @@ interface ApplicationStore {
     company: string
   ) => void;
 
-  removeApplication: (id: string) => void;
-
-  clearApplications: () => void;
-
   updateApplicationStatus: (
     id: string,
     status: ApplicationStatus
   ) => void;
+
+  removeApplication: (id: string) => void;
+
+  clearApplications: () => void;
 }
 
-// -----------------------------------------
-// Zustand Store
-// -----------------------------------------
+/* =========================================================
+   Zustand Store
+========================================================= */
 
 export const useApplicationStore =
   create<ApplicationStore>()(
     persist(
       (set) => ({
+        /* ===============================================
+           Initial State
+        =============================================== */
+
         applications: [],
 
-        // -----------------------------------
-        // Add Application
-        // -----------------------------------
+        /* ===============================================
+           Add Application
+        =============================================== */
 
         addApplication: (
           application,
@@ -94,33 +99,9 @@ export const useApplicationStore =
           }));
         },
 
-        // -----------------------------------
-        // Remove Application
-        // -----------------------------------
-
-        removeApplication: (id) => {
-          set((state) => ({
-            applications:
-              state.applications.filter(
-                (application) =>
-                  application.id !== id
-              ),
-          }));
-        },
-
-        // -----------------------------------
-        // Clear Applications
-        // -----------------------------------
-
-        clearApplications: () => {
-          set({
-            applications: [],
-          });
-        },
-
-        // -----------------------------------
-        // Update Status
-        // -----------------------------------
+        /* ===============================================
+           Update Application Status
+        =============================================== */
 
         updateApplicationStatus: (
           id,
@@ -139,7 +120,35 @@ export const useApplicationStore =
               ),
           }));
         },
+
+        /* ===============================================
+           Remove Application
+        =============================================== */
+
+        removeApplication: (id) => {
+          set((state) => ({
+            applications:
+              state.applications.filter(
+                (application) =>
+                  application.id !== id
+              ),
+          }));
+        },
+
+        /* ===============================================
+           Clear All Applications
+        =============================================== */
+
+        clearApplications: () => {
+          set({
+            applications: [],
+          });
+        },
       }),
+
+      /* ===============================================
+         Persistence
+      =============================================== */
 
       {
         name: "job-portal-applications",
@@ -148,6 +157,36 @@ export const useApplicationStore =
           createJSONStorage(
             () => localStorage
           ),
+
+        /* =============================================
+           Handle Older Stored Applications
+        ============================================= */
+
+        migrate: (persistedState) => {
+          const state =
+            persistedState as ApplicationStore;
+
+          if (!state?.applications) {
+            return state;
+          }
+
+          return {
+            ...state,
+
+            applications:
+              state.applications.map(
+                (application) => ({
+                  ...application,
+
+                  status:
+                    application.status ??
+                    "Applied",
+                })
+              ),
+          };
+        },
+
+        version: 1,
       }
     )
   );

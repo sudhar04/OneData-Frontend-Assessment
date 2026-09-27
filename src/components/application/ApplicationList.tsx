@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import {
   Button,
@@ -10,18 +10,18 @@ import {
   DialogContent,
   DialogSurface,
   DialogTitle,
+  Input,
   Text,
 } from "@fluentui/react-components";
 
 import {
   Eye,
+  Search,
   Trash2,
   Trash,
 } from "lucide-react";
 
-import {
-  useApplicationStore,
-} from "../../store/applicationStore";
+import { useApplicationStore } from "../../store/applicationStore";
 
 import type {
   JobApplication,
@@ -34,12 +34,16 @@ interface ApplicationListProps {
   ) => void;
 }
 
+type StatusFilter =
+  | "All"
+  | ApplicationStatus;
+
 export function ApplicationList({
   onViewApplication,
 }: ApplicationListProps) {
-  // -----------------------------------------
-  // Zustand Store
-  // -----------------------------------------
+  /* =====================================================
+     Store
+  ===================================================== */
 
   const applications = useApplicationStore(
     (state) => state.applications
@@ -55,28 +59,41 @@ export function ApplicationList({
 
   const updateApplicationStatus =
     useApplicationStore(
-      (state) =>
-        state.updateApplicationStatus
+      (state) => state.updateApplicationStatus
     );
 
-  // -----------------------------------------
-  // Dialog State
-  // -----------------------------------------
+  /* =====================================================
+     Local State
+  ===================================================== */
 
   const [
     applicationToRemove,
     setApplicationToRemove,
   ] = useState<JobApplication | null>(null);
 
-  const [clearDialogOpen, setClearDialogOpen] =
-    useState(false);
+  const [
+    clearDialogOpen,
+    setClearDialogOpen,
+  ] = useState(false);
 
-  // -----------------------------------------
-  // Format Date
-  // -----------------------------------------
+  const [searchTerm, setSearchTerm] =
+    useState("");
+
+  const [statusFilter, setStatusFilter] =
+    useState<StatusFilter>("All");
+
+  /* =====================================================
+     Format Date
+  ===================================================== */
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString(
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return "Unknown date";
+    }
+
+    return parsedDate.toLocaleDateString(
       "en-IN",
       {
         day: "2-digit",
@@ -86,9 +103,23 @@ export function ApplicationList({
     );
   };
 
-  // -----------------------------------------
-  // Remove Application
-  // -----------------------------------------
+  /* =====================================================
+     Status Change
+  ===================================================== */
+
+  const handleStatusChange = (
+    applicationId: string,
+    status: ApplicationStatus
+  ) => {
+    updateApplicationStatus(
+      applicationId,
+      status
+    );
+  };
+
+  /* =====================================================
+     Remove
+  ===================================================== */
 
   const handleConfirmRemove = () => {
     if (!applicationToRemove) {
@@ -102,33 +133,91 @@ export function ApplicationList({
     setApplicationToRemove(null);
   };
 
-  // -----------------------------------------
-  // Clear All Applications
-  // -----------------------------------------
+  /* =====================================================
+     Clear All
+  ===================================================== */
 
   const handleConfirmClearAll = () => {
     clearApplications();
 
     setClearDialogOpen(false);
+    setSearchTerm("");
+    setStatusFilter("All");
   };
 
-  // -----------------------------------------
-  // Status Change
-  // -----------------------------------------
+  /* =====================================================
+     Status Class
+  ===================================================== */
 
-  const handleStatusChange = (
-    applicationId: string,
+  const getStatusClass = (
     status: ApplicationStatus
   ) => {
-    updateApplicationStatus(
-      applicationId,
-      status
-    );
+    return `status-${status
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
   };
 
-  // -----------------------------------------
-  // Empty State
-  // -----------------------------------------
+  /* =====================================================
+     Search + Status Filtering
+  ===================================================== */
+
+  const filteredApplications = useMemo(() => {
+    const search =
+      searchTerm.trim().toLowerCase();
+
+    return applications.filter(
+      (application) => {
+        const currentStatus =
+          application.status ?? "Applied";
+
+        /* ---------------------------------------------
+           Status filter
+        --------------------------------------------- */
+
+        const matchesStatus =
+          statusFilter === "All" ||
+          currentStatus === statusFilter;
+
+        if (!matchesStatus) {
+          return false;
+        }
+
+        /* ---------------------------------------------
+           Search filter
+        --------------------------------------------- */
+
+        if (!search) {
+          return true;
+        }
+
+        const jobTitle =
+          application.jobTitle
+            .toLowerCase();
+
+        const company =
+          application.company
+            .toLowerCase();
+
+        const skills =
+          application.skills
+            ?.toLowerCase() ?? "";
+
+        return (
+          jobTitle.includes(search) ||
+          company.includes(search) ||
+          skills.includes(search)
+        );
+      }
+    );
+  }, [
+    applications,
+    searchTerm,
+    statusFilter,
+  ]);
+
+  /* =====================================================
+     Empty Applications
+  ===================================================== */
 
   if (applications.length === 0) {
     return (
@@ -175,191 +264,385 @@ export function ApplicationList({
     );
   }
 
-  // -----------------------------------------
-  // Applications
-  // -----------------------------------------
+  /* =====================================================
+     Main UI
+  ===================================================== */
 
   return (
-    <section className="applications-section">
+    <>
+      <section className="applications-section">
 
-      {/* ------------------------------------- */}
-      {/* Header                                */}
-      {/* ------------------------------------- */}
+        {/* =================================================
+           Header
+        ================================================= */}
 
-      <div className="applications-header">
-        <div>
-          <Text
-            size={600}
-            weight="bold"
-            block
+        <div className="applications-header">
+          <div>
+            <Text
+              size={600}
+              weight="bold"
+              block
+            >
+              My Applications
+            </Text>
+
+            <Text
+              size={300}
+              block
+              className="applications-subtitle"
+            >
+              {applications.length}{" "}
+              {applications.length === 1
+                ? "application"
+                : "applications"}{" "}
+              submitted
+            </Text>
+          </div>
+
+          <Button
+            appearance="secondary"
+            icon={<Trash size={16} />}
+            onClick={() =>
+              setClearDialogOpen(true)
+            }
           >
-            My Applications
-          </Text>
+            Clear All
+          </Button>
+        </div>
 
-          <Text
-            size={300}
-            block
-            className="applications-subtitle"
+        {/* =================================================
+           Search
+        ================================================= */}
+
+        <div className="applications-search">
+          <Input
+            value={searchTerm}
+            onChange={(_, data) =>
+              setSearchTerm(data.value)
+            }
+            placeholder="Search by job title, company, or skill..."
+            contentBefore={
+              <Search size={18} />
+            }
+            aria-label="Search applications"
+          />
+        </div>
+
+        {/* =================================================
+           Status Filters
+        ================================================= */}
+
+        <div className="application-filters">
+
+          <button
+            type="button"
+            className={
+              statusFilter === "All"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter("All")
+            }
           >
-            {applications.length}{" "}
-            {applications.length === 1
-              ? "application"
-              : "applications"}{" "}
-            submitted
+            All
+          </button>
+
+          <button
+            type="button"
+            className={
+              statusFilter === "Applied"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter("Applied")
+            }
+          >
+            Applied
+          </button>
+
+          <button
+            type="button"
+            className={
+              statusFilter ===
+              "Under Review"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter(
+                "Under Review"
+              )
+            }
+          >
+            Under Review
+          </button>
+
+          <button
+            type="button"
+            className={
+              statusFilter === "Interview"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter("Interview")
+            }
+          >
+            Interview
+          </button>
+
+          <button
+            type="button"
+            className={
+              statusFilter === "Selected"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter("Selected")
+            }
+          >
+            Selected
+          </button>
+
+          <button
+            type="button"
+            className={
+              statusFilter === "Rejected"
+                ? "application-filter active"
+                : "application-filter"
+            }
+            onClick={() =>
+              setStatusFilter("Rejected")
+            }
+          >
+            Rejected
+          </button>
+
+        </div>
+
+        {/* =================================================
+           Result Count
+        ================================================= */}
+
+        <div className="applications-search-result">
+          <Text size={300}>
+            Showing{" "}
+            <strong>
+              {filteredApplications.length}
+            </strong>{" "}
+            of{" "}
+            <strong>
+              {applications.length}
+            </strong>{" "}
+            applications
           </Text>
         </div>
 
-        <Button
-          appearance="secondary"
-          icon={<Trash size={16} />}
-          onClick={() =>
-            setClearDialogOpen(true)
-          }
-        >
-          Clear All
-        </Button>
-      </div>
+        {/* =================================================
+           No Results
+        ================================================= */}
 
-      {/* ------------------------------------- */}
-      {/* Application Cards                     */}
-      {/* ------------------------------------- */}
+        {filteredApplications.length === 0 ? (
+          <div className="applications-empty">
 
-      <div className="applications-list">
-        {applications.map((application) => (
-          <Card
-            key={application.id}
-            className="application-card"
-          >
-            {/* -------------------------------- */}
-            {/* Card Header                      */}
-            {/* -------------------------------- */}
+            <Text
+              size={500}
+              weight="semibold"
+              block
+            >
+              No applications found
+            </Text>
 
-            <CardHeader
-              header={
-                <div className="application-card-header">
-                  <div>
-                    <Text
-                      size={500}
-                      weight="semibold"
-                      block
-                    >
-                      {application.jobTitle}
-                    </Text>
+            <Text
+              size={300}
+              block
+            >
+              Try changing your search or
+              status filter.
+            </Text>
 
-                    <Text
-                      size={300}
-                      block
-                    >
-                      {application.company}
-                    </Text>
-                  </div>
+            <Button
+              appearance="secondary"
+              onClick={() => {
+                setSearchTerm("");
+                setStatusFilter("All");
+              }}
+              style={{
+                marginTop: "16px",
+              }}
+            >
+              Reset Filters
+            </Button>
 
-                  {/* Status Badge */}
+          </div>
+        ) : (
 
-                  <span
-                    className={`application-status status-${application.status.toLowerCase()}`}
+          /* =================================================
+             Application Cards
+          ================================================= */
+
+          <div className="applications-list">
+
+            {filteredApplications.map(
+              (application) => {
+
+                const currentStatus =
+                  application.status ??
+                  "Applied";
+
+                return (
+                  <Card
+                    key={application.id}
+                    className="application-card"
                   >
-                    {application.status}
-                  </span>
-                </div>
+
+                    <CardHeader
+                      header={
+                        <div className="application-card-header">
+
+                          <div>
+                            <Text
+                              size={500}
+                              weight="semibold"
+                              block
+                            >
+                              {
+                                application.jobTitle
+                              }
+                            </Text>
+
+                            <Text
+                              size={300}
+                              block
+                            >
+                              {
+                                application.company
+                              }
+                            </Text>
+                          </div>
+
+                          <span
+                            className={`application-status ${getStatusClass(
+                              currentStatus
+                            )}`}
+                          >
+                            {currentStatus}
+                          </span>
+
+                        </div>
+                      }
+                    />
+
+                    <div className="application-card-content">
+
+                      {/* Date */}
+
+                      <div className="application-meta">
+                        <span>
+                          Applied on
+                        </span>
+
+                        <strong>
+                          {formatDate(
+                            application.appliedAt
+                          )}
+                        </strong>
+                      </div>
+
+                      {/* Status */}
+
+                      <div className="application-status-control">
+
+                        <label
+                          htmlFor={`status-${application.id}`}
+                        >
+                          Status
+                        </label>
+
+                        <select
+                          id={`status-${application.id}`}
+                          value={currentStatus}
+                          onChange={(event) =>
+                            handleStatusChange(
+                              application.id,
+                              event.target
+                                .value as ApplicationStatus
+                            )
+                          }
+                        >
+                          <option value="Applied">
+                            Applied
+                          </option>
+
+                          <option value="Under Review">
+                            Under Review
+                          </option>
+
+                          <option value="Interview">
+                            Interview
+                          </option>
+
+                          <option value="Selected">
+                            Selected
+                          </option>
+
+                          <option value="Rejected">
+                            Rejected
+                          </option>
+                        </select>
+
+                      </div>
+
+                      {/* Actions */}
+
+                      <div className="application-actions">
+
+                        <Button
+                          appearance="secondary"
+                          icon={
+                            <Eye size={16} />
+                          }
+                          onClick={() =>
+                            onViewApplication(
+                              application
+                            )
+                          }
+                        >
+                          View Application
+                        </Button>
+
+                        <Button
+                          appearance="secondary"
+                          icon={
+                            <Trash2 size={16} />
+                          }
+                          onClick={() =>
+                            setApplicationToRemove(
+                              application
+                            )
+                          }
+                        >
+                          Remove
+                        </Button>
+
+                      </div>
+
+                    </div>
+                  </Card>
+                );
               }
-            />
+            )}
 
-            {/* -------------------------------- */}
-            {/* Card Content                     */}
-            {/* -------------------------------- */}
+          </div>
+        )}
+      </section>
 
-            <div className="application-card-content">
-
-              {/* Application Date */}
-
-              <div className="application-meta">
-                <span>
-                  Applied on
-                </span>
-
-                <strong>
-                  {formatDate(
-                    application.appliedAt
-                  )}
-                </strong>
-              </div>
-
-              {/* Status Selector */}
-
-              <div className="application-status-control">
-                <label
-                  htmlFor={`status-${application.id}`}
-                >
-                  Status
-                </label>
-
-                <select
-                  id={`status-${application.id}`}
-                  value={application.status}
-                  onChange={(event) =>
-                    handleStatusChange(
-                      application.id,
-                      event.target
-                        .value as ApplicationStatus
-                    )
-                  }
-                >
-                  <option value="Applied">
-                    Applied
-                  </option>
-
-                  <option value="Interview">
-                    Interview
-                  </option>
-
-                  <option value="Rejected">
-                    Rejected
-                  </option>
-
-                  <option value="Offer">
-                    Offer
-                  </option>
-                </select>
-              </div>
-
-              {/* Action Buttons */}
-
-              <div className="application-actions">
-
-                <Button
-                  appearance="secondary"
-                  icon={<Eye size={16} />}
-                  onClick={() =>
-                    onViewApplication(
-                      application
-                    )
-                  }
-                >
-                  View Application
-                </Button>
-
-                <Button
-                  appearance="secondary"
-                  icon={<Trash2 size={16} />}
-                  onClick={() =>
-                    setApplicationToRemove(
-                      application
-                    )
-                  }
-                >
-                  Remove
-                </Button>
-
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      {/* ===================================== */}
-      {/* Remove Confirmation Dialog             */}
-      {/* ===================================== */}
+      {/* ===================================================
+         Remove Confirmation
+      =================================================== */}
 
       <Dialog
         open={Boolean(
@@ -439,9 +722,9 @@ export function ApplicationList({
         </DialogSurface>
       </Dialog>
 
-      {/* ===================================== */}
-      {/* Clear All Confirmation Dialog          */}
-      {/* ===================================== */}
+      {/* ===================================================
+         Clear All Confirmation
+      =================================================== */}
 
       <Dialog
         open={clearDialogOpen}
@@ -501,7 +784,6 @@ export function ApplicationList({
           </DialogBody>
         </DialogSurface>
       </Dialog>
-
-    </section>
+    </>
   );
 }

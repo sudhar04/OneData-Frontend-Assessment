@@ -147,3 +147,556 @@ body {
     width: 100%;
   }
 }
+
+.application-company {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.application-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.application-full-width {
+  grid-column: 1 / -1;
+}
+
+.application-success {
+  padding: 24px;
+  margin: 20px 0;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+}
+
+.application-success h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .application-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .application-full-width {
+    grid-column: auto;
+  }
+}
+
+/* =========================================================
+   APPLICATION MODAL
+   ========================================================= */
+
+/* Dialog surface */
+
+.application-dialog-surface {
+  width: min(680px, calc(100vw - 32px)) !important;
+  max-width: 680px !important;
+
+  max-height: calc(100vh - 40px) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.18),
+    0 4px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+
+/* Dialog body */
+
+.application-dialog-body {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 !important;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.application-dialog-title {
+  position: relative;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin: 0 !important;
+  padding: 22px 28px 18px !important;
+
+  font-size: 22px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.3;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  color: #111827;
+}
+
+
+/* Close button */
+
+.application-close-button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 26px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.application-close-button:hover {
+  background: #f1f5f9;
+  color: #111827;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.application-dialog-content {
+  width: 100% !important;
+
+  max-height: calc(100vh - 190px) !important;
+
+  margin: 0 !important;
+
+  padding: 24px 28px !important;
+
+  overflow-y: auto !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Custom scrollbar */
+
+.application-dialog-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.application-dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.application-dialog-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+.application-dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   JOB INFORMATION
+   ========================================================= */
+
+.application-job-info {
+  margin-bottom: 24px;
+
+  padding: 16px 18px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+.application-job-title {
+  margin-bottom: 4px;
+
+  color: #0f172a;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+.application-company {
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.application-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+
+/* First name / Last name */
+
+.application-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   FLUENT UI FIELD
+   ========================================================= */
+
+.application-form .fui-Field {
+  width: 100%;
+}
+
+
+/* Labels */
+
+.application-form .fui-Field__label {
+  margin-bottom: 7px !important;
+
+  color: #334155 !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.application-form .fui-Input {
+  width: 100% !important;
+
+  min-height: 42px !important;
+
+  border-radius: 8px !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Input element */
+
+.application-form .fui-Input__input {
+  width: 100% !important;
+
+  font-size: 14px !important;
+}
+
+
+/* Textarea */
+
+.application-form .fui-Textarea {
+  width: 100% !important;
+
+  min-height: 120px !important;
+
+  border-radius: 8px !important;
+
+  box-sizing: border-box !important;
+}
+
+.application-form .fui-Textarea__textarea {
+  width: 100% !important;
+
+  min-height: 120px !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.5 !important;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.application-error {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #d13438;
+
+  font-size: 12px;
+
+  line-height: 16px;
+}
+
+
+/* =========================================================
+   FOOTER / ACTIONS
+   ========================================================= */
+
+.application-dialog-actions {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: flex-end !important;
+
+  gap: 10px !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 16px 28px 20px !important;
+
+  border-top: 1px solid #e5e7eb;
+
+  background: #ffffff;
+}
+
+
+/* Buttons */
+
+.application-dialog-actions button {
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
+.application-success {
+  padding: 40px 20px;
+
+  text-align: center;
+}
+
+.application-success-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 32px;
+
+  font-weight: 700;
+}
+
+.application-success h3 {
+  margin: 0 0 10px;
+
+  color: #111827;
+
+  font-size: 20px;
+}
+
+.application-success p {
+  margin: 6px 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .application-dialog-surface {
+    width: calc(100vw - 24px) !important;
+
+    max-width: none !important;
+
+    max-height: calc(100vh - 24px) !important;
+
+    border-radius: 12px !important;
+  }
+
+  .application-dialog-title {
+    padding: 18px 20px 16px !important;
+
+    font-size: 19px !important;
+  }
+
+  .application-dialog-content {
+    max-height: calc(100vh - 170px) !important;
+
+    padding: 20px !important;
+  }
+
+  .application-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .application-dialog-actions {
+    padding: 14px 20px 18px !important;
+  }
+
+  .application-dialog-actions button {
+    flex: 1;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .application-dialog-surface {
+    width: calc(100vw - 16px) !important;
+  }
+
+  .application-dialog-content {
+    padding: 16px !important;
+  }
+
+  .application-dialog-title {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .application-dialog-actions {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+.application-details-dialog {
+  width: min(700px, calc(100vw - 32px));
+  max-width: 700px;
+}
+
+.application-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.application-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.application-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.application-detail-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.application-detail-row span {
+  color: #64748b;
+}
+
+.application-detail-row strong {
+  text-align: right;
+  color: #1e293b;
+}
+
+.application-about-me {
+  color: #475569;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .application-details-dialog {
+    width: calc(100vw - 24px);
+  }
+
+  .application-detail-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .application-detail-row strong {
+    text-align: left;
+  }
+}

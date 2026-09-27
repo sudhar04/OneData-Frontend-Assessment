@@ -1,27 +1,47 @@
 import { create } from "zustand";
-import { jobs } from "../data/jobs";
+
+import { jobs as initialJobs } from "../data/jobs";
 import type { Job } from "../types/job";
 
 interface JobStore {
   jobs: Job[];
   appliedJobIds: string[];
 
-  applyToJob: (jobId: string) => void;
+  markJobAsApplied: (jobId: string) => void;
   isJobApplied: (jobId: string) => boolean;
+  resetAppliedJobs: () => void;
 }
 
 export const useJobStore = create<JobStore>((set, get) => ({
-  jobs,
-
+  // Always initialize these as arrays.
+  // This prevents undefined.filter / undefined.includes errors.
+  jobs: Array.isArray(initialJobs) ? initialJobs : [],
   appliedJobIds: [],
 
-  applyToJob: (jobId) => {
-    set((state) => ({
-      appliedJobIds: [...state.appliedJobIds, jobId],
-    }));
+  markJobAsApplied: (jobId: string) => {
+    if (!jobId) {
+      return;
+    }
+
+    set((state) => {
+      // Do not add the same job twice.
+      if (state.appliedJobIds.includes(jobId)) {
+        return state;
+      }
+
+      return {
+        appliedJobIds: [...state.appliedJobIds, jobId],
+      };
+    });
   },
 
-  isJobApplied: (jobId) => {
+  isJobApplied: (jobId: string) => {
     return get().appliedJobIds.includes(jobId);
+  },
+
+  resetAppliedJobs: () => {
+    set({
+      appliedJobIds: [],
+    });
   },
 }));

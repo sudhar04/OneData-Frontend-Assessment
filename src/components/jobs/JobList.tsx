@@ -1,60 +1,82 @@
-import {
-  Input,
-  Text,
-  Title3,
-} from "@fluentui/react-components";
+import { useMemo, useState } from "react";
 
-import { useState } from "react";
 import { useJobStore } from "../../store/jobStore";
 import { JobCard } from "./JobCard";
 
 export function JobList() {
   const jobs = useJobStore((state) => state.jobs);
 
-  const [search, setSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredJobs = jobs.filter((job) =>
-    `${job.title} ${job.company}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  /*
+   * Safety:
+   * Even if the store is temporarily empty/undefined during
+   * development changes, the component always works with an array.
+   */
+  const safeJobs = Array.isArray(jobs) ? jobs : [];
+
+  const filteredJobs = useMemo(() => {
+    const search = searchTerm.trim().toLowerCase();
+
+    if (!search) {
+      return safeJobs;
+    }
+
+    return safeJobs.filter((job) => {
+      const title = String(job.title ?? "").toLowerCase();
+      const company = String(job.company ?? "").toLowerCase();
+
+      return (
+        title.includes(search) ||
+        company.includes(search)
+      );
+    });
+  }, [safeJobs, searchTerm]);
 
   return (
-    <main className="job-page">
+    <section className="job-page">
+      {/* Header */}
       <div className="job-header">
         <div>
-          <Title3>Find Your Next Job</Title3>
+          <h1>Find Your Next Job</h1>
 
-          <Text>
+          <p>
             Discover opportunities that match your skills.
-          </Text>
+          </p>
         </div>
 
-        <Input
-          className="job-search"
-          placeholder="Search jobs by title or company..."
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-        />
+        <div className="job-search">
+          <input
+            type="search"
+            value={searchTerm}
+            placeholder="Search jobs by title or company..."
+            onChange={(event) =>
+              setSearchTerm(event.target.value)
+            }
+            aria-label="Search jobs"
+          />
+        </div>
       </div>
 
+      {/* Job list */}
       <div className="job-list">
         {filteredJobs.length > 0 ? (
           filteredJobs.map((job) => (
-            <JobCard key={job.id} job={job} />
+            <JobCard
+              key={job.id}
+              job={job}
+            />
           ))
         ) : (
           <div className="empty-state">
-            <Text size={500} weight="semibold">
-              No jobs found
-            </Text>
+            <h3>No jobs found</h3>
 
-            <Text>
-              Try searching for another job title or company.
-            </Text>
+            <p>
+              Try searching for a different job title or company.
+            </p>
           </div>
         )}
       </div>
-    </main>
+    </section>
   );
 }

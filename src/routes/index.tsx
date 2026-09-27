@@ -1,14 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { JobList } from "../components/jobs/JobList";
 
-export const Route = createFileRoute('/')({
-  component: JobPortal,
-})
+export const Route = createFileRoute("/")({
+  component: HomePage,
+});
 
-function JobPortal() {
-  return (
-    <div>
-      <h1>OneData Job Portal</h1>
-      <p>Frontend Developer Assessment</p>
-    </div>
-  )
+function HomePage() {
+  return <JobList />;
 }

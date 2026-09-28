@@ -1,4 +1,8 @@
 import { create } from "zustand";
+import {
+  persist,
+  createJSONStorage,
+} from "zustand/middleware";
 
 import { jobs as initialJobs } from "../data/jobs";
 import type { Job } from "../types/job";
@@ -12,36 +16,78 @@ interface JobStore {
   resetAppliedJobs: () => void;
 }
 
-export const useJobStore = create<JobStore>((set, get) => ({
-  // Always initialize these as arrays.
-  // This prevents undefined.filter / undefined.includes errors.
-  jobs: Array.isArray(initialJobs) ? initialJobs : [],
-  appliedJobIds: [],
+export const useJobStore = create<JobStore>()(
+  persist(
+    (set, get) => ({
+      /* =========================================
+         Jobs
+      ========================================= */
 
-  markJobAsApplied: (jobId: string) => {
-    if (!jobId) {
-      return;
-    }
+      jobs: Array.isArray(initialJobs)
+        ? initialJobs
+        : [],
 
-    set((state) => {
-      // Do not add the same job twice.
-      if (state.appliedJobIds.includes(jobId)) {
-        return state;
-      }
+      /* =========================================
+         Applied Job IDs
+      ========================================= */
 
-      return {
-        appliedJobIds: [...state.appliedJobIds, jobId],
-      };
-    });
-  },
-
-  isJobApplied: (jobId: string) => {
-    return get().appliedJobIds.includes(jobId);
-  },
-
-  resetAppliedJobs: () => {
-    set({
       appliedJobIds: [],
-    });
-  },
-}));
+
+      /* =========================================
+         Mark Job As Applied
+      ========================================= */
+
+      markJobAsApplied: (jobId: string) => {
+        if (!jobId) {
+          return;
+        }
+
+        set((state) => {
+          // Prevent duplicate application
+          if (state.appliedJobIds.includes(jobId)) {
+            return state;
+          }
+
+          return {
+            appliedJobIds: [
+              ...state.appliedJobIds,
+              jobId,
+            ],
+          };
+        });
+      },
+
+      /* =========================================
+         Check If Job Is Applied
+      ========================================= */
+
+      isJobApplied: (jobId: string) => {
+        return get().appliedJobIds.includes(jobId);
+      },
+
+      /* =========================================
+         Reset Applied Jobs
+      ========================================= */
+
+      resetAppliedJobs: () => {
+        set({
+          appliedJobIds: [],
+        });
+      },
+    }),
+
+    /* =========================================
+       Persistence
+    ========================================= */
+
+    {
+      name: "job-portal-jobs",
+
+      storage: createJSONStorage(
+        () => localStorage
+      ),
+
+      version: 1,
+    }
+  )
+);

@@ -158,9 +158,7 @@ export const useApplicationStore =
             () => localStorage
           ),
 
-        /* =============================================
-           Handle Older Stored Applications
-        ============================================= */
+        version: 1,
 
         migrate: (persistedState) => {
           const state =
@@ -185,8 +183,6 @@ export const useApplicationStore =
               ),
           };
         },
-
-        version: 1,
       }
     )
   );

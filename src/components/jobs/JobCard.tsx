@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Button } from "@fluentui/react-components";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Building2,
+  BriefcaseBusiness,
+  X,
+} from "lucide-react";
 
 import {
   useNavigate,
@@ -119,9 +125,21 @@ export function JobCard({ job }: JobCardProps) {
 
   const handleApplicationSubmit = () => {
     markJobAsApplied(job.id);
-
     setApplicationOpen(false);
   };
+
+  /* ======================================================
+     EXPERIENCE TEXT
+  ====================================================== */
+
+  const experienceText =
+    job.experience === 0
+      ? "Fresher"
+      : `${job.experience} ${
+          job.experience === 1
+            ? "year"
+            : "years"
+        } experience`;
 
   /* ======================================================
      RENDER
@@ -172,8 +190,6 @@ export function JobCard({ job }: JobCardProps) {
               </span>
             )}
 
-            {/* Image error fallback */}
-
             {job.logo && (
               <span className="company-logo-fallback logo-error-fallback">
                 {job.company
@@ -189,12 +205,28 @@ export function JobCard({ job }: JobCardProps) {
 
           <div className="job-information">
 
+            {/* Top meta */}
+            <div className="job-card-topline">
+              <span className="job-card-type">
+                <BriefcaseBusiness size={14} />
+                Full Time
+              </span>
+
+              {isApplied && (
+                <span className="job-card-applied-badge">
+                  <CheckCircle2 size={14} />
+                  Applied
+                </span>
+              )}
+            </div>
+
             {/* Job title */}
 
             <button
               type="button"
               className="job-title job-title-button"
               onClick={handleOpenJobDetails}
+              aria-label={`View details for ${job.title}`}
             >
               {job.title}
             </button>
@@ -202,19 +234,14 @@ export function JobCard({ job }: JobCardProps) {
             {/* Company */}
 
             <div className="company-name">
-              {job.company}
+              <Building2 size={15} />
+              <span>{job.company}</span>
             </div>
 
             {/* Experience */}
 
             <div className="experience">
-              {job.experience === 0
-                ? "Fresher"
-                : `${job.experience} ${
-                    job.experience === 1
-                      ? "year"
-                      : "years"
-                  } experience`}
+              {experienceText}
             </div>
 
             {/* Description */}
@@ -241,10 +268,11 @@ export function JobCard({ job }: JobCardProps) {
           </div>
 
           {/* ================================================
-              ACTIONS
+              ACTION
           ================================================ */}
 
           <div className="job-actions">
+
             <Button
               appearance={
                 isApplied
@@ -261,11 +289,13 @@ export function JobCard({ job }: JobCardProps) {
               }
               iconPosition="after"
               onClick={handleApply}
+              className="job-apply-button"
             >
               {isApplied
                 ? "View Application"
                 : "Apply Now"}
             </Button>
+
           </div>
         </div>
       </article>
@@ -282,7 +312,8 @@ export function JobCard({ job }: JobCardProps) {
           aria-labelledby="job-details-title"
           onMouseDown={(event) => {
             if (
-              event.target === event.currentTarget
+              event.target ===
+              event.currentTarget
             ) {
               handleCloseJobDetails();
             }
@@ -295,9 +326,16 @@ export function JobCard({ job }: JobCardProps) {
             ========================================== */}
 
             <div className="job-details-modal-header">
-              <h2 id="job-details-title">
-                Job Details
-              </h2>
+
+              <div className="job-details-modal-heading">
+                <span className="job-details-eyebrow">
+                  JOB DETAILS
+                </span>
+
+                <h2 id="job-details-title">
+                  {job.title}
+                </h2>
+              </div>
 
               <button
                 type="button"
@@ -305,7 +343,7 @@ export function JobCard({ job }: JobCardProps) {
                 onClick={handleCloseJobDetails}
                 aria-label="Close job details"
               >
-                ×
+                <X size={20} />
               </button>
             </div>
 
@@ -330,7 +368,8 @@ export function JobCard({ job }: JobCardProps) {
                           "none";
 
                         const parent =
-                          event.currentTarget.parentElement;
+                          event.currentTarget
+                            .parentElement;
 
                         if (parent) {
                           parent.classList.add(
@@ -375,13 +414,7 @@ export function JobCard({ job }: JobCardProps) {
                 </h4>
 
                 <p>
-                  {job.experience === 0
-                    ? "Fresher"
-                    : `${job.experience} ${
-                        job.experience === 1
-                          ? "year"
-                          : "years"
-                      } experience`}
+                  {experienceText}
                 </p>
               </section>
 
@@ -439,6 +472,14 @@ export function JobCard({ job }: JobCardProps) {
                     ? "secondary"
                     : "primary"
                 }
+                icon={
+                  isApplied ? (
+                    <CheckCircle2 size={16} />
+                  ) : (
+                    <ArrowRight size={16} />
+                  )
+                }
+                iconPosition="after"
                 onClick={() => {
                   handleCloseJobDetails();
                   handleApply();

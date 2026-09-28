@@ -1,4 +1,3 @@
-import { Card, Text } from "@fluentui/react-components";
 import {
   BriefcaseBusiness,
   Clock3,
@@ -40,75 +39,110 @@ export function ApplicationStats() {
     {
       label: "Total Applications",
       value: totalApplications,
-      icon: <BriefcaseBusiness size={22} />,
+      description: "Jobs you've applied to",
+      icon: BriefcaseBusiness,
       className: "stat-total",
     },
     {
       label: "Under Review",
       value: underReview,
-      icon: <Clock3 size={22} />,
+      description: "Applications being reviewed",
+      icon: Clock3,
       className: "stat-review",
     },
     {
       label: "Interviews",
       value: interviews,
-      icon: <MessageSquare size={22} />,
+      description: "Interview opportunities",
+      icon: MessageSquare,
       className: "stat-interview",
     },
     {
       label: "Selected",
       value: selected,
-      icon: <CheckCircle2 size={22} />,
+      description: "Successful applications",
+      icon: CheckCircle2,
       className: "stat-selected",
     },
     {
       label: "Rejected",
       value: rejected,
-      icon: <XCircle size={22} />,
+      description: "Applications not selected",
+      icon: XCircle,
       className: "stat-rejected",
     },
   ];
 
   return (
     <section className="application-stats">
+
+      {/* Header */}
       <div className="application-stats-header">
+
         <div>
-          <Text size={600} weight="bold" block>
+          <span className="application-stats-eyebrow">
+            APPLICATION TRACKER
+          </span>
+
+          <h2>
             Application Overview
-          </Text>
+          </h2>
 
-          <Text
-            size={300}
-            block
-            className="applications-subtitle"
-          >
-            Track the progress of your job applications.
-          </Text>
+          <p>
+            Track the progress of your job applications in one place.
+          </p>
         </div>
+
       </div>
 
+
+      {/* Statistics */}
       <div className="application-stats-grid">
-        {stats.map((stat) => (
-          <Card
-            key={stat.label}
-            className={`application-stat-card ${stat.className}`}
-          >
-            <div className="application-stat-icon">
-              {stat.icon}
-            </div>
 
-            <div className="application-stat-info">
-              <Text size={300} block>
-                {stat.label}
-              </Text>
+        {stats.map((stat) => {
+          const Icon = stat.icon;
 
-              <Text size={700} weight="bold" block>
-                {stat.value}
-              </Text>
+          return (
+            <div
+              key={stat.label}
+              className={`application-stat-card ${stat.className}`}
+            >
+
+              <div className="application-stat-top">
+
+                <div className="application-stat-icon">
+                  <Icon size={19} strokeWidth={2} />
+                </div>
+
+                <span className="application-stat-arrow">
+                  ↗
+                </span>
+
+              </div>
+
+
+              <div className="application-stat-content">
+
+                <span className="application-stat-label">
+                  {stat.label}
+                </span>
+
+                <strong className="application-stat-value">
+                  {stat.value}
+                </strong>
+
+                <span className="application-stat-description">
+                  {stat.description}
+                </span>
+
+              </div>
+
             </div>
-          </Card>
-        ))}
+          );
+        })}
+
       </div>
+
     </section>
   );
 }

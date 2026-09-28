@@ -10,10 +10,11 @@ import {
   Input,
 } from "@fluentui/react-components";
 
-import { useState } from "react";
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import { useEffect, useState } from "react";
 
 import type { ApplicationData } from "../../types/application";
 import { useApplicationStore } from "../../store/applicationStore";
@@ -65,31 +66,58 @@ export function ApplicationModal({
   const [submitted, setSubmitted] = useState(false);
 
   // --------------------------------
-  // React Quill Configuration
+  // TipTap Editor
   // --------------------------------
 
-  const quillModules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ align: [] }],
-      ["link"],
-      ["clean"],
-    ],
-  };
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3],
+        },
+      }),
 
-  const quillFormats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "list",
-    "bullet",
-    "align",
-    "link",
-  ];
+      Underline,
+
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
+    ],
+
+    content: "",
+
+    editorProps: {
+      attributes: {
+        class: "application-editor-content",
+      },
+    },
+
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+
+      setAboutMe(html);
+
+      if (html.replace(/<[^>]*>/g, "").trim()) {
+        clearError("aboutMe");
+      }
+    },
+  });
+
+  // --------------------------------
+  // Sync editor content
+  // --------------------------------
+
+  useEffect(() => {
+    if (!editor) {
+      return;
+    }
+
+    if (aboutMe && editor.getHTML() !== aboutMe) {
+      editor.commands.setContent(aboutMe);
+    }
+  }, [editor]);
 
   // --------------------------------
   // Validation
@@ -124,9 +152,9 @@ export function ApplicationModal({
       newErrors.skills = "Please enter your skills.";
     }
 
-    // Remove HTML tags before checking if About Me is empty
     const plainAboutMe = aboutMe
-      .replace(/<(.|\n)*?>/g, "")
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
       .trim();
 
     if (!plainAboutMe) {
@@ -154,6 +182,47 @@ export function ApplicationModal({
   };
 
   // --------------------------------
+  // Add Link
+  // --------------------------------
+
+  const addLink = () => {
+    if (!editor) {
+      return;
+    }
+
+    const previousUrl = editor.getAttributes("link").href;
+
+    const url = window.prompt(
+      "Enter URL",
+      previousUrl || "https://"
+    );
+
+    if (url === null) {
+      return;
+    }
+
+    if (url === "") {
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .unsetLink()
+        .run();
+
+      return;
+    }
+
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({
+        href: url,
+      })
+      .run();
+  };
+
+  // --------------------------------
   // Submit Application
   // --------------------------------
 
@@ -168,7 +237,7 @@ export function ApplicationModal({
       email: email.trim(),
       phone: phone.trim(),
       skills: skills.trim(),
-      aboutMe: aboutMe,
+      aboutMe,
     };
 
     // Save application in Zustand
@@ -195,6 +264,10 @@ export function ApplicationModal({
 
     setErrors({});
     setSubmitted(false);
+
+    if (editor) {
+      editor.commands.clearContent();
+    }
   };
 
   // --------------------------------
@@ -247,6 +320,7 @@ export function ApplicationModal({
             <>
               <DialogContent className="application-dialog-content">
                 <div className="application-success">
+
                   <div className="application-success-icon">
                     ✓
                   </div>
@@ -264,6 +338,7 @@ export function ApplicationModal({
                   <p>
                     Your application has been saved successfully.
                   </p>
+
                 </div>
               </DialogContent>
 
@@ -287,6 +362,7 @@ export function ApplicationModal({
                 {/* Job Information */}
 
                 <div className="application-job-info">
+
                   <div className="application-job-title">
                     {jobTitle}
                   </div>
@@ -294,6 +370,7 @@ export function ApplicationModal({
                   <div className="application-company">
                     {company}
                   </div>
+
                 </div>
 
                 {/* Application Form */}
@@ -389,7 +466,9 @@ export function ApplicationModal({
                     />
                   </Field>
 
-                  {/* About Me - Rich Text Editor */}
+                  {/* =========================
+                      ABOUT ME
+                  ========================== */}
 
                   <Field
                     label="About Me"
@@ -399,25 +478,205 @@ export function ApplicationModal({
                     <div
                       className={
                         errors.aboutMe
-                          ? "application-quill-error"
-                          : "application-quill"
+                          ? "application-rich-text-error"
+                          : "application-rich-text"
                       }
                     >
-                      <ReactQuill
-                        theme="snow"
-                        value={aboutMe}
-                        onChange={(value) => {
-                          setAboutMe(value);
-                          clearError("aboutMe");
-                        }}
-                        modules={quillModules}
-                        formats={quillFormats}
-                        placeholder="Tell us about yourself..."
-                      />
+
+                      {/* Editor Toolbar */}
+
+                      <div className="application-editor-toolbar">
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("bold")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleBold()
+                              .run()
+                          }
+                        >
+                          <strong>B</strong>
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("italic")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleItalic()
+                              .run()
+                          }
+                        >
+                          <em>I</em>
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("underline")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleUnderline()
+                              .run()
+                          }
+                        >
+                          <u>U</u>
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("strike")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleStrike()
+                              .run()
+                          }
+                        >
+                          <s>S</s>
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("heading", {
+                              level: 1,
+                            })
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleHeading({
+                                level: 1,
+                              })
+                              .run()
+                          }
+                        >
+                          H1
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("heading", {
+                              level: 2,
+                            })
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleHeading({
+                                level: 2,
+                              })
+                              .run()
+                          }
+                        >
+                          H2
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("bulletList")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleBulletList()
+                              .run()
+                          }
+                        >
+                          • List
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("orderedList")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .toggleOrderedList()
+                              .run()
+                          }
+                        >
+                          1. List
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance={
+                            editor?.isActive("link")
+                              ? "primary"
+                              : "subtle"
+                          }
+                          onClick={addLink}
+                        >
+                          Link
+                        </Button>
+
+                        <Button
+                          size="small"
+                          appearance="subtle"
+                          onClick={() =>
+                            editor
+                              ?.chain()
+                              .focus()
+                              .unsetAllMarks()
+                              .clearNodes()
+                              .run()
+                          }
+                        >
+                          Clear
+                        </Button>
+
+                      </div>
+
+                      {/* Editor */}
+
+                      <EditorContent editor={editor} />
+
                     </div>
                   </Field>
 
                 </div>
+
               </DialogContent>
 
               {/* =========================

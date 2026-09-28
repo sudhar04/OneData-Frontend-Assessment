@@ -2416,3 +2416,70 @@ textarea {
     padding: 20px;
   }
 }
+
+.application-rich-text {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.application-rich-text-error {
+  border: 1px solid #d13438;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.application-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.application-editor-content {
+  min-height: 180px;
+  padding: 12px;
+  outline: none;
+}
+
+.application-editor-content p {
+  margin: 0 0 8px;
+}
+
+.application-editor-content h1 {
+  font-size: 1.8rem;
+  margin: 12px 0;
+}
+
+.application-editor-content h2 {
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+.application-editor-content h3 {
+  font-size: 1.2rem;
+  margin: 8px 0;
+}
+
+.application-editor-content ul {
+  padding-left: 24px;
+  list-style: disc;
+}
+
+.application-editor-content ol {
+  padding-left: 24px;
+  list-style: decimal;
+}
+
+.application-editor-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.application-editor-content:focus {
+  outline: none;
+}

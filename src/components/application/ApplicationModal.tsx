@@ -314,38 +314,6 @@ const applicationSchema = z.object({
     ),
 });
 
-
-/* =========================================================
-   TANSTACK VALIDATION ERROR HELPER
-   TanStack Form can return either a string or a Standard Schema
-   issue object. Fluent UI Field.validationMessage expects text.
-========================================================= */
-const getValidationMessage = (errors: unknown): string | undefined => {
-  if (!Array.isArray(errors) || errors.length === 0) {
-    return undefined;
-  }
-
-  const error = errors[0];
-
-  if (typeof error === "string") {
-    return error;
-  }
-
-  if (
-    error &&
-    typeof error === "object" &&
-    "message" in error
-  ) {
-    const message = (error as { message?: unknown }).message;
-
-    if (typeof message === "string") {
-      return message;
-    }
-  }
-
-  return undefined;
-};
-
 /* =========================================================
    COMPONENT
 ========================================================= */
@@ -608,627 +576,465 @@ export function ApplicationModal({
   return (
     <Dialog
       open={open}
-      onOpenChange={(
-        _,
-        data
-      ) => {
+      onOpenChange={(_, data) => {
         if (!data.open) {
           handleClose();
         }
       }}
     >
       <DialogSurface className="application-dialog-surface">
-
         <DialogBody className="application-dialog-body">
-
           {/* =================================================
               HEADER
           ================================================= */}
-
           <DialogTitle className="application-dialog-title">
-
-            <span>
-              Apply for this Job
-            </span>
+            <span>Apply for this Job</span>
 
             <button
               type="button"
               className="application-close-button"
-              onClick={
-                handleClose
-              }
+              onClick={handleClose}
               aria-label="Close application form"
             >
               ×
             </button>
-
           </DialogTitle>
 
           {/* =================================================
               SUCCESS
           ================================================= */}
-
           {submitted ? (
             <>
-              <DialogContent className="application-dialog-content">
-
+              <DialogContent className="application-dialog-content application-success-content">
                 <div className="application-success">
+                  <div className="application-success-icon">✓</div>
 
-                  <div className="application-success-icon">
-                    ✓
-                  </div>
-
-                  <h3>
-                    Application
-                    submitted
-                    successfully!
-                  </h3>
+                  <h3>Application submitted successfully!</h3>
 
                   <p>
-                    Your application
-                    for{" "}
-                    <strong>
-                      {jobTitle}
-                    </strong>{" "}
-                    at{" "}
-                    <strong>
-                      {company}
-                    </strong>{" "}
-                    has been
-                    submitted.
+                    Your application for <strong>{jobTitle}</strong> at{" "}
+                    <strong>{company}</strong> has been submitted.
                   </p>
 
-                  <p>
-                    Your application
-                    has been saved
-                    successfully.
-                  </p>
-
+                  <p>Your application has been saved successfully.</p>
                 </div>
-
               </DialogContent>
 
               <DialogActions className="application-dialog-actions">
-
-                <Button
-                  appearance="primary"
-                  onClick={
-                    handleClose
-                  }
-                >
+                <Button appearance="primary" onClick={handleClose}>
                   Done
                 </Button>
-
               </DialogActions>
             </>
           ) : (
             <>
               {/* =================================================
-                  FORM
+                  FORM LAYOUT
               ================================================= */}
+              <DialogContent className="application-dialog-content application-modal-content">
+                <div className="application-modal-layout">
+                  {/* =================================================
+                      LEFT — JOB INFORMATION
+                  ================================================= */}
+                  <aside className="application-job-panel">
+                    <div className="application-job-logo" aria-hidden="true">
+                      {company.trim().charAt(0).toUpperCase() || "J"}
+                    </div>
 
-              <DialogContent className="application-dialog-content">
+                    <div className="application-job-panel-content">
+                      <span className="application-job-panel-label">
+                        APPLYING FOR
+                      </span>
 
-                {/* Job Information */}
+                      <h2 className="application-job-panel-title">
+                        {jobTitle}
+                      </h2>
 
-                <div className="application-job-info">
+                      <p className="application-job-panel-company">
+                        {company}
+                      </p>
 
-                  <div className="application-job-title">
-                    {jobTitle}
-                  </div>
+                      <div className="application-job-panel-divider" />
 
-                  <div className="application-company">
-                    {company}
-                  </div>
+                      <div className="application-job-panel-section">
+                        <span className="application-job-panel-label">
+                          APPLICATION
+                        </span>
+                        <p>
+                          Complete your details below to submit your application.
+                        </p>
+                      </div>
 
-                </div>
-
-                <div className="application-form">
+                      <div className="application-job-panel-note">
+                        <span className="application-job-panel-note-icon">✓</span>
+                        <span>Your information will be saved securely.</span>
+                      </div>
+                    </div>
+                  </aside>
 
                   {/* =================================================
-                      FIRST + LAST NAME
+                      RIGHT — APPLICATION FORM
                   ================================================= */}
+                  <div className="application-form-panel">
+                    <div className="application-form-panel-header">
+                      <h3>Application Details</h3>
+                      <p>Fill in the required information to continue.</p>
+                    </div>
 
-                  <div className="application-form-grid">
+                    <div className="application-form">
+                      {/* =================================================
+                          FIRST + LAST NAME
+                      ================================================= */}
+                      <div className="application-form-grid">
+                        <form.Field
+                          name="firstName"
+                          children={(field) => (
+                            <Field
+                              label="First Name"
+                              required
+                              validationMessage={
+                                field.state.meta.errors?.[0]?.message
+                              }
+                            >
+                              <Input
+                                value={field.state.value}
+                                placeholder="Enter your first name"
+                                onChange={(_, data) => {
+                                  field.handleChange(data.value);
+                                }}
+                              />
+                            </Field>
+                          )}
+                        />
 
-                    <form.Field
-                      name="firstName"
-                      children={(
-                        field
-                      ) => (
-                        <Field
-                          label="First Name"
-                          required
-                          validationMessage={
-                            getValidationMessage(field.state.meta.errors)
-                          }
-                        >
-                          <Input
-                            value={
-                              field.state
-                                .value
+                        <form.Field
+                          name="lastName"
+                          children={(field) => (
+                            <Field
+                              label="Last Name"
+                              required
+                              validationMessage={
+                                field.state.meta.errors?.[0]?.message
+                              }
+                            >
+                              <Input
+                                value={field.state.value}
+                                placeholder="Enter your last name"
+                                onChange={(_, data) => {
+                                  field.handleChange(data.value);
+                                }}
+                              />
+                            </Field>
+                          )}
+                        />
+                      </div>
+
+                      {/* =================================================
+                          EMAIL
+                      ================================================= */}
+                      <form.Field
+                        name="email"
+                        children={(field) => (
+                          <Field
+                            label="Email"
+                            required
+                            validationMessage={
+                              field.state.meta.errors?.[0]?.message
                             }
-                            placeholder="Enter your first name"
-                            onChange={(
-                              _,
-                              data
-                            ) => {
-                              field.handleChange(
-                                data.value
-                              );
-                            }}
-                          />
-                        </Field>
-                      )}
-                    />
+                          >
+                            <Input
+                              type="email"
+                              value={field.state.value}
+                              placeholder="example@email.com"
+                              onChange={(_, data) => {
+                                field.handleChange(data.value);
+                              }}
+                            />
+                          </Field>
+                        )}
+                      />
 
-                    <form.Field
-                      name="lastName"
-                      children={(
-                        field
-                      ) => (
-                        <Field
-                          label="Last Name"
-                          required
-                          validationMessage={
-                            getValidationMessage(field.state.meta.errors)
-                          }
-                        >
-                          <Input
-                            value={
-                              field.state
-                                .value
+                      {/* =================================================
+                          PHONE
+                      ================================================= */}
+                      <form.Field
+                        name="phone"
+                        children={(field) => (
+                          <Field
+                            label="Phone Number"
+                            required
+                            validationMessage={
+                              field.state.meta.errors?.[0]?.message
                             }
-                            placeholder="Enter your last name"
-                            onChange={(
-                              _,
-                              data
-                            ) => {
-                              field.handleChange(
-                                data.value
-                              );
-                            }}
-                          />
-                        </Field>
-                      )}
-                    />
+                          >
+                            <Input
+                              type="tel"
+                              value={field.state.value}
+                              placeholder="Enter your phone number"
+                              onChange={(_, data) => {
+                                field.handleChange(data.value);
+                              }}
+                            />
+                          </Field>
+                        )}
+                      />
 
+                      {/* =================================================
+                          SKILLS
+                      ================================================= */}
+                      <form.Field
+                        name="skills"
+                        children={(field) => (
+                          <Field
+                            label="Skills"
+                            required
+                            validationMessage={
+                              field.state.meta.errors?.[0]?.message
+                            }
+                          >
+                            <AsyncSelect
+                              isMulti
+                              cacheOptions
+                              defaultOptions={SKILL_OPTIONS}
+                              loadOptions={loadSkills}
+                              value={field.state.value}
+                              onChange={(value) => {
+                                field.handleChange([...value]);
+                              }}
+                              placeholder="Search and select your skills..."
+                              closeMenuOnSelect={false}
+                              isClearable
+                              noOptionsMessage={() => "No skills found"}
+                              loadingMessage={() => "Searching skills..."}
+                              className="application-skills-select"
+                              classNamePrefix="skills-select"
+                            />
+
+                            <input
+                              type="hidden"
+                              value={selectedSkillValues}
+                              readOnly
+                              aria-hidden="true"
+                            />
+                          </Field>
+                        )}
+                      />
+
+                      {/* =================================================
+                          ABOUT ME
+                      ================================================= */}
+                      <form.Field
+                        name="aboutMe"
+                        children={(field) => (
+                          <Field
+                            label="About Me"
+                            required
+                            validationMessage={
+                              field.state.meta.errors?.[0]?.message
+                            }
+                          >
+                            <div className="application-rich-text">
+                              <div className="application-editor-toolbar">
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("bold")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleBold()
+                                      .run()
+                                  }
+                                >
+                                  <strong>B</strong>
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("italic")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleItalic()
+                                      .run()
+                                  }
+                                >
+                                  <em>I</em>
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("underline")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleUnderline()
+                                      .run()
+                                  }
+                                >
+                                  <u>U</u>
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("strike")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleStrike()
+                                      .run()
+                                  }
+                                >
+                                  <s>S</s>
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("heading", { level: 1 })
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleHeading({ level: 1 })
+                                      .run()
+                                  }
+                                >
+                                  H1
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("heading", { level: 2 })
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleHeading({ level: 2 })
+                                      .run()
+                                  }
+                                >
+                                  H2
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("bulletList")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleBulletList()
+                                      .run()
+                                  }
+                                >
+                                  • List
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("orderedList")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .toggleOrderedList()
+                                      .run()
+                                  }
+                                >
+                                  1. List
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance={
+                                    editor?.isActive("link")
+                                      ? "primary"
+                                      : "subtle"
+                                  }
+                                  onClick={addLink}
+                                >
+                                  Link
+                                </Button>
+
+                                <Button
+                                  type="button"
+                                  size="small"
+                                  appearance="subtle"
+                                  onClick={() =>
+                                    editor
+                                      ?.chain()
+                                      .focus()
+                                      .unsetAllMarks()
+                                      .clearNodes()
+                                      .run()
+                                  }
+                                >
+                                  Clear
+                                </Button>
+                              </div>
+
+                              <EditorContent editor={editor} />
+                            </div>
+                          </Field>
+                        )}
+                      />
+                    </div>
                   </div>
-
-                  {/* =================================================
-                      EMAIL
-                  ================================================= */}
-
-                  <form.Field
-                    name="email"
-                    children={(
-                      field
-                    ) => (
-                      <Field
-                        label="Email"
-                        required
-                        validationMessage={
-                          getValidationMessage(field.state.meta.errors)
-                        }
-                      >
-                        <Input
-                          type="email"
-                          value={
-                            field.state
-                              .value
-                          }
-                          placeholder="example@email.com"
-                          onChange={(
-                            _,
-                            data
-                          ) => {
-                            field.handleChange(
-                              data.value
-                            );
-                          }}
-                        />
-                      </Field>
-                    )}
-                  />
-
-                  {/* =================================================
-                      PHONE
-                  ================================================= */}
-
-                  <form.Field
-                    name="phone"
-                    children={(
-                      field
-                    ) => (
-                      <Field
-                        label="Phone Number"
-                        required
-                        validationMessage={
-                          getValidationMessage(field.state.meta.errors)
-                        }
-                      >
-                        <Input
-                          type="tel"
-                          value={
-                            field.state
-                              .value
-                          }
-                          placeholder="Enter your phone number"
-                          onChange={(
-                            _,
-                            data
-                          ) => {
-                            field.handleChange(
-                              data.value
-                            );
-                          }}
-                        />
-                      </Field>
-                    )}
-                  />
-
-                  {/* =================================================
-                      SKILLS
-                  ================================================= */}
-
-                  <form.Field
-                    name="skills"
-                    children={(
-                      field
-                    ) => (
-                      <Field
-                        label="Skills"
-                        required
-                        validationMessage={
-                          getValidationMessage(field.state.meta.errors)
-                        }
-                      >
-                        <AsyncSelect
-                          isMulti
-                          cacheOptions
-                          defaultOptions={
-                            SKILL_OPTIONS
-                          }
-                          loadOptions={
-                            loadSkills
-                          }
-                          value={
-                            field.state
-                              .value
-                          }
-                          onChange={(
-                            value
-                          ) => {
-                            field.handleChange(
-                              [
-                                ...value,
-                              ]
-                            );
-                          }}
-                          placeholder="Search and select your skills..."
-                          closeMenuOnSelect={
-                            false
-                          }
-                          isClearable
-                          noOptionsMessage={() =>
-                            "No skills found"
-                          }
-                          loadingMessage={() =>
-                            "Searching skills..."
-                          }
-                          className="application-skills-select"
-                          classNamePrefix="skills-select"
-                        />
-
-                        {/* Hidden accessibility/value
-                            reference for debugging */}
-
-                        <input
-                          type="hidden"
-                          value={
-                            selectedSkillValues
-                          }
-                          readOnly
-                          aria-hidden="true"
-                        />
-                      </Field>
-                    )}
-                  />
-
-                  {/* =================================================
-                      ABOUT ME
-                  ================================================= */}
-
-                  <form.Field
-                    name="aboutMe"
-                    children={(
-                      field
-                    ) => (
-                      <Field
-                        label="About Me"
-                        required
-                        validationMessage={
-                          getValidationMessage(field.state.meta.errors)
-                        }
-                      >
-                        <div className="application-rich-text">
-
-                          {/* Toolbar */}
-
-                          <div className="application-editor-toolbar">
-
-                            {/* Bold */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "bold"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleBold()
-                                  .run()
-                              }
-                            >
-                              <strong>
-                                B
-                              </strong>
-                            </Button>
-
-                            {/* Italic */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "italic"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleItalic()
-                                  .run()
-                              }
-                            >
-                              <em>
-                                I
-                              </em>
-                            </Button>
-
-                            {/* Underline */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "underline"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleUnderline()
-                                  .run()
-                              }
-                            >
-                              <u>
-                                U
-                              </u>
-                            </Button>
-
-                            {/* Strike */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "strike"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleStrike()
-                                  .run()
-                              }
-                            >
-                              <s>
-                                S
-                              </s>
-                            </Button>
-
-                            {/* H1 */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "heading",
-                                  {
-                                    level: 1,
-                                  }
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleHeading(
-                                    {
-                                      level: 1,
-                                    }
-                                  )
-                                  .run()
-                              }
-                            >
-                              H1
-                            </Button>
-
-                            {/* H2 */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "heading",
-                                  {
-                                    level: 2,
-                                  }
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleHeading(
-                                    {
-                                      level: 2,
-                                    }
-                                  )
-                                  .run()
-                              }
-                            >
-                              H2
-                            </Button>
-
-                            {/* Bullet List */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "bulletList"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleBulletList()
-                                  .run()
-                              }
-                            >
-                              • List
-                            </Button>
-
-                            {/* Ordered List */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "orderedList"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .toggleOrderedList()
-                                  .run()
-                              }
-                            >
-                              1. List
-                            </Button>
-
-                            {/* Link */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance={
-                                editor?.isActive(
-                                  "link"
-                                )
-                                  ? "primary"
-                                  : "subtle"
-                              }
-                              onClick={
-                                addLink
-                              }
-                            >
-                              Link
-                            </Button>
-
-                            {/* Clear */}
-
-                            <Button
-                              type="button"
-                              size="small"
-                              appearance="subtle"
-                              onClick={() =>
-                                editor
-                                  ?.chain()
-                                  .focus()
-                                  .unsetAllMarks()
-                                  .clearNodes()
-                                  .run()
-                              }
-                            >
-                              Clear
-                            </Button>
-
-                          </div>
-
-                          {/* Editor */}
-
-                          <EditorContent
-                            editor={editor}
-                          />
-
-                        </div>
-                      </Field>
-                    )}
-                  />
-
                 </div>
-
               </DialogContent>
 
               {/* =================================================
                   ACTIONS
               ================================================= */}
-
               <DialogActions className="application-dialog-actions">
-
                 <Button
                   type="button"
                   appearance="secondary"
-                  onClick={
-                    handleClose
-                  }
+                  onClick={handleClose}
                 >
                   Cancel
                 </Button>
@@ -1236,19 +1042,14 @@ export function ApplicationModal({
                 <Button
                   type="button"
                   appearance="primary"
-                  onClick={() =>
-                    form.handleSubmit()
-                  }
+                  onClick={() => form.handleSubmit()}
                 >
                   Submit Application
                 </Button>
-
               </DialogActions>
             </>
           )}
-
         </DialogBody>
-
       </DialogSurface>
     </Dialog>
   );

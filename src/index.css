@@ -3942,7 +3942,7 @@ body.modal-open {
   }
 
   .application-stat-card {
-    min-height: 145px;
+    min-height: 220px;
   }
 
   .dashboard-jobs-section {
@@ -3954,4 +3954,126 @@ body.modal-open {
     font-size: 24px;
   }
 
+}
+
+/* =========================================================
+   COLORFUL APPLICATION STAT CARDS
+   ========================================================= */
+
+.application-stat-card.stats-card-blue {
+  background: #2f80ed !important;
+  border: none !important;
+  border-top: none !important;
+  color: #ffffff !important;
+}
+
+.application-stat-card.stats-card-orange {
+  background: #f2994a !important;
+  border: none !important;
+  border-top: none !important;
+  color: #ffffff !important;
+}
+
+.application-stat-card.stats-card-purple {
+  background: #9b51e0 !important;
+  border: none !important;
+  border-top: none !important;
+  color: #ffffff !important;
+}
+
+.application-stat-card.stats-card-green {
+  background: #27ae60 !important;
+  border: none !important;
+  border-top: none !important;
+  color: #ffffff !important;
+}
+
+.application-stat-card.stats-card-red {
+  background: #eb5757 !important;
+  border: none !important;
+  border-top: none !important;
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   WHITE ICON
+   ========================================================= */
+
+.application-stat-card .application-stat-icon {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   WHITE ARROW
+   ========================================================= */
+
+.application-stat-card .application-stat-arrow {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   WHITE TEXT
+   ========================================================= */
+
+.application-stat-card .application-stat-label {
+  color: #ffffff !important;
+}
+
+.application-stat-card .application-stat-value {
+  color: #ffffff !important;
+}
+
+.application-stat-card .application-stat-description {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.application-search {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 24px 0 20px;
+}
+
+.application-search .application-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.application-search .fui-Input {
+  width: 100%;
+}
+
+.application-search input {
+  width: 100%;
+  height: 48px;
+  padding-left: 46px;
+  padding-right: 16px;
+  border: 1px solid #d7deea;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.application-search input:hover {
+  border-color: #b8c4d6;
+}
+
+.application-search input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }

@@ -6,4 +6,5 @@ export interface Job {
   description: string;
   skills: string[];
   logo?: string;
+  logoColor?: string;
 }

@@ -314,19 +314,20 @@ export function ApplicationList({
            Search
         ================================================= */}
 
-        <div className="applications-search">
-          <Input
-            value={searchTerm}
-            onChange={(_, data) =>
-              setSearchTerm(data.value)
-            }
-            placeholder="Search by job title, company, or skill..."
-            contentBefore={
-              <Search size={18} />
-            }
-            aria-label="Search applications"
-          />
-        </div>
+        <div className="application-search">
+  <Search size={18} className="application-search-icon" />
+
+  <Input
+    value={searchTerm}
+    placeholder="Search applications..."
+    aria-label="Search applications"
+    appearance="outline"
+    size="large"
+    onChange={(event) => {
+      setSearchTerm(event.target.value);
+    }}
+  />
+</div>
 
         {/* =================================================
            Status Filters

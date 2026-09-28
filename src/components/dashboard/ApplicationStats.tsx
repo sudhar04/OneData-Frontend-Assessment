@@ -13,6 +13,10 @@ export function ApplicationStats() {
     (state) => state.applications
   );
 
+  /* =========================================================
+     Calculate Application Statistics
+  ========================================================= */
+
   const totalApplications = applications.length;
 
   const underReview = applications.filter(
@@ -35,50 +39,64 @@ export function ApplicationStats() {
       (application.status ?? "Applied") === "Rejected"
   ).length;
 
+  /* =========================================================
+     Statistics Configuration
+  ========================================================= */
+
   const stats = [
     {
       label: "Total Applications",
       value: totalApplications,
       description: "Jobs you've applied to",
       icon: BriefcaseBusiness,
-      className: "stat-total",
+      cardClass: "stats-card-blue",
     },
+
     {
       label: "Under Review",
       value: underReview,
       description: "Applications being reviewed",
       icon: Clock3,
-      className: "stat-review",
+      cardClass: "stats-card-orange",
     },
+
     {
       label: "Interviews",
       value: interviews,
       description: "Interview opportunities",
       icon: MessageSquare,
-      className: "stat-interview",
+      cardClass: "stats-card-purple",
     },
+
     {
       label: "Selected",
       value: selected,
       description: "Successful applications",
       icon: CheckCircle2,
-      className: "stat-selected",
+      cardClass: "stats-card-green",
     },
+
     {
       label: "Rejected",
       value: rejected,
       description: "Applications not selected",
       icon: XCircle,
-      className: "stat-rejected",
+      cardClass: "stats-card-red",
     },
   ];
+
+  /* =========================================================
+     UI
+  ========================================================= */
 
   return (
     <section className="application-stats">
 
-      {/* Header */}
-      <div className="application-stats-header">
+      {/* =====================================================
+          Header
+      ===================================================== */}
 
+      <div className="application-stats-header">
         <div>
           <span className="application-stats-eyebrow">
             APPLICATION TRACKER
@@ -92,11 +110,12 @@ export function ApplicationStats() {
             Track the progress of your job applications in one place.
           </p>
         </div>
-
       </div>
 
+      {/* =====================================================
+          Statistics Cards
+      ===================================================== */}
 
-      {/* Statistics */}
       <div className="application-stats-grid">
 
         {stats.map((stat) => {
@@ -105,13 +124,18 @@ export function ApplicationStats() {
           return (
             <div
               key={stat.label}
-              className={`application-stat-card ${stat.className}`}
+              className={`application-stat-card ${stat.cardClass}`}
             >
+
+              {/* Top section */}
 
               <div className="application-stat-top">
 
                 <div className="application-stat-icon">
-                  <Icon size={19} strokeWidth={2} />
+                  <Icon
+                    size={19}
+                    strokeWidth={2}
+                  />
                 </div>
 
                 <span className="application-stat-arrow">
@@ -120,6 +144,7 @@ export function ApplicationStats() {
 
               </div>
 
+              {/* Content */}
 
               <div className="application-stat-content">
 
@@ -142,7 +167,6 @@ export function ApplicationStats() {
         })}
 
       </div>
-
     </section>
   );
 }

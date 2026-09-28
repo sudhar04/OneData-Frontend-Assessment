@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Sparkles,
+} from "lucide-react";
 
 import { ApplicationStats } from "../components/dashboard/ApplicationStats";
 import { ApplicationList } from "../components/application/ApplicationList";
@@ -80,58 +85,122 @@ function HomePage() {
   return (
     <main className="home-page">
 
-      {/* =========================================
+      {/* =====================================================
           HERO / WELCOME
-      ========================================= */}
+      ===================================================== */}
 
       <section className="dashboard-hero">
-        <div className="dashboard-hero-content">
 
-          <span className="dashboard-eyebrow">
-            JOB PORTAL
-          </span>
+        <div className="dashboard-hero-left">
 
-          <h1>
-            Welcome to Your Job Dashboard
+          <div className="dashboard-eyebrow">
+            <Sparkles size={15} />
+            <span>JOB PORTAL</span>
+          </div>
+
+          <h1 className="dashboard-title">
+            Welcome to your
+            <span> Job Dashboard</span>
           </h1>
 
-          <p>
-            Discover opportunities, track applications,
-            and manage your job search in one place.
+          <p className="dashboard-description">
+            Manage your applications, track your progress,
+            and discover your next career opportunity.
           </p>
 
+          <a
+            href="#job-opportunities"
+            className="dashboard-explore-button"
+          >
+            <BriefcaseBusiness size={17} />
+            Explore Jobs
+            <ArrowRight size={16} />
+          </a>
+
         </div>
+
+        {/* =================================================
+            RIGHT HERO SUMMARY
+        ================================================= */}
+
+        <div className="dashboard-hero-right">
+
+          <div className="hero-summary-card">
+
+            <div className="hero-summary-icon">
+              <BriefcaseBusiness size={22} />
+            </div>
+
+            <div className="hero-summary-content">
+
+              <span>
+                APPLICATION TRACKER
+              </span>
+
+              <strong>
+                Stay on top of your job search
+              </strong>
+
+              <p>
+                Track applications, interviews,
+                and opportunities from one place.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div className="hero-decoration hero-decoration-one" />
+          <div className="hero-decoration hero-decoration-two" />
+
+        </div>
+
       </section>
 
-      {/* =========================================
+
+      {/* =====================================================
           APPLICATION STATISTICS
-      ========================================= */}
+      ===================================================== */}
 
       <section className="dashboard-section">
         <ApplicationStats />
       </section>
 
-      {/* =========================================
-          AVAILABLE JOBS
-      ========================================= */}
 
-      <section className="dashboard-section">
+      {/* =====================================================
+          AVAILABLE JOBS
+          
+          JobList already contains:
+          - Section heading
+          - Search
+          - Results count
+          - Job cards
+      ===================================================== */}
+
+      <section
+        id="job-opportunities"
+        className="dashboard-section dashboard-jobs"
+      >
         <JobList />
       </section>
 
-      {/* =========================================
+
+      {/* =====================================================
           MY APPLICATIONS
-      ========================================= */}
+      ===================================================== */}
 
       <section className="dashboard-section">
+
         <ApplicationList
           onViewApplication={handleViewApplication}
         />
+
       </section>
 
-      {/* =========================================
+
+      {/* =====================================================
           APPLICATION DETAILS MODAL
-      ========================================= */}
+      ===================================================== */}
 
       <ApplicationDetailsModal
         open={detailsOpen}

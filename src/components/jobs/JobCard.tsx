@@ -159,45 +159,42 @@ export function JobCard({ job }: JobCardProps) {
         <div className="job-card-content">
 
           {/* ================================================
-              COMPANY LOGO
-          ================================================ */}
+    COMPANY LOGO
+================================================ */}
 
-          <div className="company-logo-wrapper">
-            {job.logo ? (
-              <img
-                src={job.logo}
-                alt={`${job.company} logo`}
-                className="company-logo"
-                onError={(event) => {
-                  event.currentTarget.style.display =
-                    "none";
+<div
+  className="job-company-logo-box"
+  style={
+    {
+      "--job-logo-color": job.logoColor || "#2563eb",
+    } as React.CSSProperties
+  }
+>
+  {job.logo ? (
+    <img
+      src={job.logo}
+      alt={`${job.company} logo`}
+      className="job-company-logo-image"
+      onError={(event) => {
+        event.currentTarget.style.display = "none";
 
-                  const parent =
-                    event.currentTarget.parentElement;
+        const fallback =
+          event.currentTarget.parentElement?.querySelector(
+            ".job-company-logo-fallback"
+          );
 
-                  if (parent) {
-                    parent.classList.add(
-                      "logo-image-error"
-                    );
-                  }
-                }}
-              />
-            ) : (
-              <span className="company-logo-fallback">
-                {job.company
-                  .charAt(0)
-                  .toUpperCase()}
-              </span>
-            )}
+        if (fallback) {
+          fallback.classList.add("job-company-logo-fallback-visible");
+        }
+      }}
+    />
+  ) : null}
 
-            {job.logo && (
-              <span className="company-logo-fallback logo-error-fallback">
-                {job.company
-                  .charAt(0)
-                  .toUpperCase()}
-              </span>
-            )}
-          </div>
+  {/* Fallback letter */}
+  <span className="job-company-logo-fallback">
+    {job.company.charAt(0).toUpperCase()}
+  </span>
+</div>
 
           {/* ================================================
               JOB INFORMATION

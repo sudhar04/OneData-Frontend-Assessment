@@ -71,22 +71,23 @@ export function JobList() {
   /*
    * Update search parameter in URL.
    */
-  const handleSearchChange = (
-    value: string
-  ) => {
-    navigate({
-      search: (previous) => ({
-        ...previous,
+  const handleSearchChange = (value: string) => {
+  navigate({
+    search: (previous) => ({
+      ...previous,
 
-        search:
-          value.trim().length > 0
-            ? value
-            : undefined,
-      }),
+      search:
+        value.trim().length > 0
+          ? value
+          : undefined,
+    }),
 
-      replace: true,
-    });
-  };
+    replace: true,
+
+    // Prevent the page from jumping to the top
+    resetScroll: false,
+  });
+};
 
   return (
     <section className="job-page">

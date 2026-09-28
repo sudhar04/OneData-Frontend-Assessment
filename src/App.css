@@ -3712,3 +3712,915 @@ body.modal-open {
     padding: 10px !important;
   }
 }
+
+/* =========================================================
+   APPLICATION MODAL — STYLE LAYOUT
+   ========================================================= */
+
+.application-dialog-surface {
+  width: min(960px, calc(100vw - 32px)) !important;
+  max-width: 960px !important;
+  max-height: calc(100vh - 32px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22),
+    0 8px 24px rgba(15, 23, 42, 0.08) !important;
+}
+
+.application-dialog-body {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Header */
+.application-dialog-title {
+  position: relative;
+  z-index: 2;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-height: 70px !important;
+  margin: 0 !important;
+  padding: 20px 28px !important;
+  color: #111827 !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.application-close-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.application-close-button:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Main two-column area */
+.application-modal-content {
+  width: 100% !important;
+  max-height: calc(100vh - 170px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.application-modal-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 38%) minmax(0, 1fr);
+  min-height: 570px;
+  width: 100%;
+}
+
+/* Left job panel */
+.application-job-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 30px;
+  background: #f8fafc;
+  border-right: 1px solid #e5e7eb;
+}
+
+.application-job-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+}
+
+.application-job-panel-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.application-job-panel-label {
+  display: block;
+  margin-bottom: 9px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+.application-job-panel-title {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.application-job-panel-company {
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.application-job-panel-divider {
+  width: 100%;
+  height: 1px;
+  margin: 28px 0;
+  background: #e2e8f0;
+}
+
+.application-job-panel-section p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.application-job-panel-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: auto;
+  padding: 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.application-job-panel-note-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Right form panel */
+.application-form-panel {
+  min-width: 0;
+  padding: 30px 32px 34px;
+  background: #ffffff;
+}
+
+.application-form-panel-header {
+  margin-bottom: 24px;
+}
+
+.application-form-panel-header h3 {
+  margin: 0 0 5px;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.application-form-panel-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.application-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.application-form-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.application-form .fui-Field {
+  width: 100%;
+}
+
+.application-form .fui-Field__label {
+  margin-bottom: 7px !important;
+  color: #334155 !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+}
+
+.application-form .fui-Input {
+  width: 100% !important;
+  min-height: 44px !important;
+  border-radius: 8px !important;
+}
+
+/* React Select */
+.application-skills-select {
+  width: 100%;
+}
+
+.application-skills-select .skills-select__control {
+  min-height: 44px;
+  border-color: #d1d5db;
+  border-radius: 8px;
+  box-shadow: none;
+  cursor: text;
+}
+
+.application-skills-select .skills-select__control:hover {
+  border-color: #94a3b8;
+}
+
+.application-skills-select .skills-select__control--is-focused {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.application-skills-select .skills-select__menu {
+  z-index: 20;
+}
+
+.application-skills-select .skills-select__multi-value {
+  border-radius: 6px;
+  background: #eff6ff;
+}
+
+.application-skills-select .skills-select__multi-value__label {
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Rich text editor */
+.application-rich-text {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+}
+
+.application-rich-text:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.application-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 7px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.application-editor-content {
+  min-height: 150px;
+  max-height: 230px;
+  padding: 12px 14px;
+  overflow-y: auto;
+  outline: none;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.application-editor-content p {
+  margin: 0 0 8px;
+}
+
+.application-editor-content h1,
+.application-editor-content h2,
+.application-editor-content h3 {
+  color: #0f172a;
+}
+
+.application-editor-content h1 {
+  margin: 12px 0;
+  font-size: 1.6rem;
+}
+
+.application-editor-content h2 {
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+
+.application-editor-content h3 {
+  margin: 8px 0;
+  font-size: 1.15rem;
+}
+
+.application-editor-content ul {
+  padding-left: 24px;
+  list-style: disc;
+}
+
+.application-editor-content ol {
+  padding-left: 24px;
+  list-style: decimal;
+}
+
+.application-editor-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Footer actions */
+.application-dialog-actions {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 14px 28px 16px !important;
+  background: #ffffff !important;
+  border-top: 1px solid #e5e7eb !important;
+}
+
+/* Success */
+.application-success-content {
+  min-height: 420px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 40px !important;
+  overflow-y: auto !important;
+}
+
+.application-success {
+  width: min(520px, 100%);
+  padding: 36px;
+  text-align: center;
+  border: 1px solid #bbf7d0;
+  border-radius: 16px;
+  background: #f0fdf4;
+}
+
+.application-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.application-success h3 {
+  margin: 0 0 12px;
+  color: #166534;
+  font-size: 21px;
+}
+
+.application-success p {
+  margin: 8px 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 760px) {
+  .application-dialog-surface {
+    width: min(680px, calc(100vw - 20px)) !important;
+    max-height: calc(100vh - 20px) !important;
+    border-radius: 14px !important;
+  }
+
+  .application-dialog-title {
+    min-height: 62px !important;
+    padding: 17px 20px !important;
+    font-size: 19px !important;
+  }
+
+  .application-modal-content {
+    max-height: calc(100vh - 145px) !important;
+  }
+
+  .application-modal-layout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .application-job-panel {
+    padding: 22px 20px;
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .application-job-logo {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+
+  .application-job-panel-title {
+    font-size: 20px;
+  }
+
+  .application-job-panel-divider {
+    margin: 18px 0;
+  }
+
+  .application-job-panel-note {
+    margin-top: 20px;
+  }
+
+  .application-form-panel {
+    padding: 22px 20px 26px;
+  }
+
+  .application-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .application-dialog-actions {
+    padding: 12px 20px 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .application-dialog-surface {
+    width: calc(100vw - 12px) !important;
+    max-height: calc(100vh - 12px) !important;
+    border-radius: 12px !important;
+  }
+
+  .application-dialog-title {
+    padding: 15px 16px !important;
+    font-size: 18px !important;
+  }
+
+  .application-close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 25px;
+  }
+
+  .application-job-panel,
+  .application-form-panel {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .application-dialog-actions {
+    flex-direction: column-reverse !important;
+    align-items: stretch !important;
+  }
+
+  .application-dialog-actions .fui-Button {
+    width: 100%;
+  }
+
+  .application-success-content {
+    padding: 20px !important;
+  }
+
+  .application-success {
+    padding: 24px 18px;
+  }
+}
+
+/* =========================================================
+   ABOUT ME - RICH TEXT EDITOR
+   ========================================================= */
+
+.application-rich-text {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Editor gets a clean blue focus state */
+.application-rich-text:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.application-editor-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+
+  padding: 7px 10px;
+
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+
+  min-height: 46px;
+}
+
+/* Toolbar buttons */
+.application-editor-toolbar button {
+  min-width: 34px;
+  height: 32px;
+
+  padding: 0 8px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: transparent;
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Hover */
+.application-editor-toolbar button:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* =========================================================
+   TIPTAP EDITOR AREA
+   ========================================================= */
+
+.application-rich-text .ProseMirror {
+  min-height: 150px;
+
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  outline: none;
+
+  cursor: text;
+}
+
+/* Placeholder */
+.application-rich-text .ProseMirror p.is-editor-empty:first-child::before {
+  content: "Tell us about yourself...";
+
+  float: left;
+
+  height: 0;
+
+  color: #9ca3af;
+
+  pointer-events: none;
+}
+
+/* Paragraph */
+.application-rich-text .ProseMirror p {
+  margin: 0 0 8px;
+}
+
+/* Headings */
+.application-rich-text .ProseMirror h1 {
+  margin: 12px 0 8px;
+
+  font-size: 24px;
+  line-height: 1.3;
+
+  font-weight: 700;
+  color: #111827;
+}
+
+.application-rich-text .ProseMirror h2 {
+  margin: 10px 0 6px;
+
+  font-size: 20px;
+  line-height: 1.4;
+
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Lists */
+.application-rich-text .ProseMirror ul,
+.application-rich-text .ProseMirror ol {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+.application-rich-text .ProseMirror li {
+  margin: 3px 0;
+}
+
+/* Links */
+.application-rich-text .ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Bold */
+.application-rich-text .ProseMirror strong {
+  font-weight: 700;
+}
+
+/* Italic */
+.application-rich-text .ProseMirror em {
+  font-style: italic;
+}
+
+/* Underline */
+.application-rich-text .ProseMirror u {
+  text-decoration: underline;
+}
+
+/* Strike */
+.application-rich-text .ProseMirror s {
+  text-decoration: line-through;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .application-editor-toolbar {
+    gap: 2px;
+    padding: 6px 8px;
+  }
+
+  .application-editor-toolbar button {
+    min-width: 32px;
+    height: 30px;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+
+  .application-rich-text .ProseMirror {
+    min-height: 130px;
+    padding: 12px 14px;
+  }
+}
+
+/* =========================================================
+   APPLICATION FORM
+   ========================================================= */
+
+.application-form {
+  width: 100%;
+}
+
+.application-form .field {
+  margin-bottom: 18px;
+}
+
+/* Labels */
+.application-form label {
+  display: block;
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+/* Inputs */
+.application-form input,
+.application-form textarea,
+.application-form select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #111827;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Placeholder */
+.application-form input::placeholder,
+.application-form textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Focus */
+.application-form input:focus,
+.application-form textarea:focus,
+.application-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Two-column First/Last Name */
+.application-form .name-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Email / Phone */
+.application-form .full-field {
+  width: 100%;
+}
+
+/* Required star */
+.application-form .required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .application-form .name-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+/* =========================================================
+   NEW JOB CARD COMPANY LOGO
+   Completely separate from old logo styles
+========================================================= */
+
+.job-card-company-logo-new {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  background: #eef4ff;
+  border: 1px solid #dbe7ff;
+  border-radius: 14px;
+
+  overflow: hidden;
+}
+
+
+/* Actual company image */
+.job-card-company-logo-image-new {
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+  display: block;
+}
+
+
+/* Company letter fallback */
+.job-card-company-logo-letter-new {
+  width: 100%;
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  display: none;
+
+  color: var(--company-logo-color) !important;
+}
+
+
+/*
+   If there is no image at all,
+   show the company letter.
+*/
+.job-card-company-logo-new
+  .job-card-company-logo-letter-new:only-child {
+  display: flex;
+}
+
+/* =================================================
+   JOB CARD - COMPANY LOGO
+   Completely isolated from old logo CSS
+================================================= */
+
+.job-company-logo-box {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  background: #eef4ff;
+  border: 1px solid #dbe7ff;
+
+  overflow: hidden;
+}
+
+/* Actual company image */
+.job-company-logo-image {
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+/* Company initial */
+.job-company-logo-fallback {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  color: var(--job-logo-color) !important;
+
+  background: #eef4ff !important;
+
+  line-height: 1;
+
+  position: absolute;
+  inset: 0;
+}
+
+/* When actual logo loads, hide fallback */
+.job-company-logo-box
+  .job-company-logo-image:not([style*="display: none"])
+  + .job-company-logo-fallback {
+  display: none;
+}
+
+/* When image fails */
+.job-company-logo-fallback-visible {
+  display: flex !important;
+}

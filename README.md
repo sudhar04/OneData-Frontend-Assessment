@@ -22,9 +22,7 @@ The application allows users to:
 
 **Live Application:**
 
-👉 **[View Live Application](https://your-project-name.netlify.app)**
-
-> ⚠️ Replace the URL above with your actual deployed application URL.
+👉 **[View Live Application](https://onedata-frontend-assessment.vercel.app/)**
 
 ---
 

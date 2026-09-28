@@ -37,9 +37,13 @@ export function ApplicationDetailsModal({
     year: "numeric",
   });
 
-  // --------------------------------------------------
+  const skills = Array.isArray(application.skills)
+    ? application.skills.join(", ")
+    : String(application.skills ?? "");
+
+  // =====================================================
   // PRINT APPLICATION
-  // --------------------------------------------------
+  // =====================================================
 
   const handlePrint = () => {
     const printContent = document.getElementById(
@@ -72,9 +76,16 @@ export function ApplicationDetailsModal({
             body {
               margin: 0;
               padding: 40px;
-              font-family: Arial, sans-serif;
+              font-family: Arial, Helvetica, sans-serif;
               color: #1f2937;
               background: #ffffff;
+              line-height: 1.5;
+            }
+
+            .print-container {
+              width: 100%;
+              max-width: 900px;
+              margin: 0 auto;
             }
 
             .print-header {
@@ -85,12 +96,14 @@ export function ApplicationDetailsModal({
 
             .print-header h1 {
               margin: 0 0 8px;
-              font-size: 26px;
+              font-size: 28px;
+              color: #111827;
             }
 
             .print-header p {
               margin: 0;
               color: #64748b;
+              font-size: 15px;
             }
 
             .section {
@@ -99,7 +112,7 @@ export function ApplicationDetailsModal({
 
             .section-title {
               margin-bottom: 14px;
-              font-size: 17px;
+              font-size: 18px;
               font-weight: 700;
               color: #2563eb;
             }
@@ -108,34 +121,45 @@ export function ApplicationDetailsModal({
               display: flex;
               justify-content: space-between;
               align-items: flex-start;
-              gap: 20px;
-              padding: 10px 0;
+              gap: 24px;
+              padding: 12px 0;
               border-bottom: 1px solid #e5e7eb;
             }
 
             .row span {
               color: #64748b;
+              min-width: 120px;
               flex-shrink: 0;
             }
 
             .row strong {
               text-align: right;
               word-break: break-word;
+              overflow-wrap: anywhere;
             }
 
             .about-me {
               line-height: 1.7;
               word-break: break-word;
+              overflow-wrap: anywhere;
             }
 
             .about-me p {
               margin: 0 0 10px;
             }
 
+            .about-me p:last-child {
+              margin-bottom: 0;
+            }
+
             .about-me ul,
             .about-me ol {
               margin: 10px 0;
               padding-left: 24px;
+            }
+
+            .about-me li {
+              margin-bottom: 4px;
             }
 
             .about-me a {
@@ -154,92 +178,106 @@ export function ApplicationDetailsModal({
               body {
                 padding: 20px;
               }
+
+              .section {
+                break-inside: avoid;
+              }
             }
           </style>
         </head>
 
         <body>
-          <div class="print-header">
-            <h1>Job Application</h1>
+          <div class="print-container">
 
-            <p>
-              ${application.jobTitle} —
-              ${application.company}
-            </p>
-          </div>
+            <div class="print-header">
+              <h1>Job Application</h1>
 
-          <div class="section">
-            <div class="section-title">
-              Job Information
-            </div>
-
-            <div class="row">
-              <span>Job Title</span>
-              <strong>
+              <p>
                 ${application.jobTitle}
-              </strong>
-            </div>
-
-            <div class="row">
-              <span>Company</span>
-              <strong>
+                —
                 ${application.company}
-              </strong>
+              </p>
             </div>
 
-            <div class="row">
-              <span>Applied On</span>
-              <strong>
-                ${appliedDate}
-              </strong>
-            </div>
-          </div>
+            <div class="section">
+              <div class="section-title">
+                Job Information
+              </div>
 
-          <div class="section">
-            <div class="section-title">
-              Applicant Information
-            </div>
+              <div class="row">
+                <span>Job Title</span>
 
-            <div class="row">
-              <span>Name</span>
-              <strong>
-                ${application.firstName}
-                ${application.lastName}
-              </strong>
-            </div>
+                <strong>
+                  ${application.jobTitle}
+                </strong>
+              </div>
 
-            <div class="row">
-              <span>Email</span>
-              <strong>
-                ${application.email}
-              </strong>
-            </div>
+              <div class="row">
+                <span>Company</span>
 
-            <div class="row">
-              <span>Phone</span>
-              <strong>
-                ${application.phone}
-              </strong>
+                <strong>
+                  ${application.company}
+                </strong>
+              </div>
+
+              <div class="row">
+                <span>Applied On</span>
+
+                <strong>
+                  ${appliedDate}
+                </strong>
+              </div>
             </div>
 
-            <div class="row">
-              <span>Skills</span>
-              <strong>
-                ${Array.isArray(application.skills)
-                  ? application.skills.join(", ")
-                  : application.skills}
-              </strong>
-            </div>
-          </div>
+            <div class="section">
+              <div class="section-title">
+                Applicant Information
+              </div>
 
-          <div class="section">
-            <div class="section-title">
-              About Me
+              <div class="row">
+                <span>Name</span>
+
+                <strong>
+                  ${application.firstName}
+                  ${application.lastName}
+                </strong>
+              </div>
+
+              <div class="row">
+                <span>Email</span>
+
+                <strong>
+                  ${application.email}
+                </strong>
+              </div>
+
+              <div class="row">
+                <span>Phone</span>
+
+                <strong>
+                  ${application.phone}
+                </strong>
+              </div>
+
+              <div class="row">
+                <span>Skills</span>
+
+                <strong>
+                  ${skills}
+                </strong>
+              </div>
             </div>
 
-            <div class="about-me">
-              ${application.aboutMe}
+            <div class="section">
+              <div class="section-title">
+                About Me
+              </div>
+
+              <div class="about-me">
+                ${application.aboutMe}
+              </div>
             </div>
+
           </div>
         </body>
       </html>
@@ -251,12 +289,12 @@ export function ApplicationDetailsModal({
     setTimeout(() => {
       printWindow.print();
       printWindow.close();
-    }, 300);
+    }, 500);
   };
 
-  // --------------------------------------------------
+  // =====================================================
   // DOWNLOAD PDF
-  // --------------------------------------------------
+  // =====================================================
 
   const handleDownloadPDF = async () => {
     const element = document.getElementById(
@@ -294,12 +332,12 @@ export function ApplicationDetailsModal({
       const availableWidth =
         pageWidth - margin * 2;
 
+      const availableHeight =
+        pageHeight - margin * 2;
+
       const imageHeight =
         (canvas.height * availableWidth) /
         canvas.width;
-
-      const availablePageHeight =
-        pageHeight - margin * 2;
 
       let heightLeft = imageHeight;
 
@@ -315,7 +353,7 @@ export function ApplicationDetailsModal({
         imageHeight
       );
 
-      heightLeft -= availablePageHeight;
+      heightLeft -= availableHeight;
 
       // Additional pages
       while (heightLeft > 0) {
@@ -334,7 +372,7 @@ export function ApplicationDetailsModal({
           imageHeight
         );
 
-        heightLeft -= availablePageHeight;
+        heightLeft -= availableHeight;
       }
 
       const safeCompany =
@@ -358,9 +396,9 @@ export function ApplicationDetailsModal({
     }
   };
 
-  // --------------------------------------------------
+  // =====================================================
   // UI
-  // --------------------------------------------------
+  // =====================================================
 
   return (
     <Dialog
@@ -372,44 +410,77 @@ export function ApplicationDetailsModal({
       }}
     >
       <DialogSurface
+        className="application-details-dialog"
         style={{
-          width: "min(720px, calc(100vw - 32px))",
-          maxWidth: "720px",
+          width: "min(760px, calc(100vw - 32px))",
+          maxWidth: "760px",
+          height: "min(760px, calc(100vh - 32px))",
           maxHeight: "calc(100vh - 32px)",
-          overflow: "hidden",
           margin: "16px auto",
+          padding: 0,
+          overflow: "hidden",
+          position: "relative",
+          zIndex: 10000,
+          borderRadius: "12px",
+          backgroundColor: "#ffffff",
+          boxSizing: "border-box",
         }}
       >
         <DialogBody
           style={{
+            height: "100%",
+            maxHeight: "100%",
+            padding: 0,
+            margin: 0,
             display: "flex",
             flexDirection: "column",
-            maxHeight: "calc(100vh - 32px)",
-            minHeight: 0,
             overflow: "hidden",
+            boxSizing: "border-box",
           }}
         >
-          {/* TITLE */}
+          {/* =================================================
+              HEADER
+          ================================================= */}
 
-          <DialogTitle
+          <div
             style={{
               flexShrink: 0,
-              paddingBottom: "12px",
-              marginBottom: "0",
+              padding: "20px 24px 16px",
+              borderBottom: "1px solid #e5e7eb",
+              backgroundColor: "#ffffff",
+              position: "relative",
+              zIndex: 2,
             }}
           >
-            Job Application Details
-          </DialogTitle>
+            <DialogTitle
+              style={{
+                margin: 0,
+                padding: 0,
+                fontSize: "22px",
+                lineHeight: 1.3,
+                fontWeight: 700,
+                color: "#111827",
+              }}
+            >
+              Job Application Details
+            </DialogTitle>
+          </div>
 
-          {/* SCROLLABLE CONTENT */}
+          {/* =================================================
+              SCROLLABLE CONTENT
+          ================================================= */}
 
           <DialogContent
             style={{
-              flex: 1,
+              flex: "1 1 auto",
               minHeight: 0,
+              height: "100%",
               overflowY: "auto",
               overflowX: "hidden",
-              padding: "8px 4px 16px",
+              padding: "24px",
+              margin: 0,
+              backgroundColor: "#ffffff",
+              boxSizing: "border-box",
             }}
           >
             <div
@@ -417,19 +488,26 @@ export function ApplicationDetailsModal({
               className="application-details"
               style={{
                 width: "100%",
+                maxWidth: "100%",
+                margin: 0,
+                padding: 0,
                 backgroundColor: "#ffffff",
-                padding: "4px",
+                color: "#1f2937",
+                boxSizing: "border-box",
+                overflowWrap: "anywhere",
               }}
             >
-              {/* -------------------------------- */}
-              {/* JOB INFORMATION */}
-              {/* -------------------------------- */}
+              {/* =================================================
+                  JOB INFORMATION
+              ================================================= */}
 
               <section
                 className="application-details-section"
                 style={{
-                  marginBottom: "24px",
                   width: "100%",
+                  margin: "0 0 28px",
+                  padding: 0,
+                  boxSizing: "border-box",
                 }}
               >
                 <Text
@@ -437,77 +515,130 @@ export function ApplicationDetailsModal({
                   weight="semibold"
                   style={{
                     display: "block",
-                    marginBottom: "12px",
+                    margin: "0 0 14px",
+                    padding: 0,
+                    color: "#111827",
+                    lineHeight: 1.4,
                   }}
                 >
                   Job Information
                 </Text>
 
+                {/* Job title */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Job Title</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Job Title
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
+                      wordBreak: "break-word",
+                      fontSize: "14px",
                     }}
                   >
                     {application.jobTitle}
                   </strong>
                 </div>
 
+                {/* Company */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Company</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Company
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
+                      wordBreak: "break-word",
+                      fontSize: "14px",
                     }}
                   >
                     {application.company}
                   </strong>
                 </div>
 
+                {/* Applied date */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Applied On</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Applied On
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
+                      fontSize: "14px",
                     }}
                   >
                     {appliedDate}
@@ -515,15 +646,17 @@ export function ApplicationDetailsModal({
                 </div>
               </section>
 
-              {/* -------------------------------- */}
-              {/* APPLICANT INFORMATION */}
-              {/* -------------------------------- */}
+              {/* =================================================
+                  APPLICANT INFORMATION
+              ================================================= */}
 
               <section
                 className="application-details-section"
                 style={{
-                  marginBottom: "24px",
                   width: "100%",
+                  margin: "0 0 28px",
+                  padding: 0,
+                  boxSizing: "border-box",
                 }}
               >
                 <Text
@@ -531,30 +664,49 @@ export function ApplicationDetailsModal({
                   weight="semibold"
                   style={{
                     display: "block",
-                    marginBottom: "12px",
+                    margin: "0 0 14px",
+                    padding: 0,
+                    color: "#111827",
+                    lineHeight: 1.4,
                   }}
                 >
                   Applicant Information
                 </Text>
 
+                {/* Name */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Name</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Name
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
+                      fontSize: "14px",
                     }}
                   >
                     {application.firstName}{" "}
@@ -562,91 +714,141 @@ export function ApplicationDetailsModal({
                   </strong>
                 </div>
 
+                {/* Email */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Email</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Email
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
+                      wordBreak: "break-word",
+                      fontSize: "14px",
                     }}
                   >
                     {application.email}
                   </strong>
                 </div>
 
+                {/* Phone */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Phone</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Phone
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
+                      fontSize: "14px",
                     }}
                   >
                     {application.phone}
                   </strong>
                 </div>
 
+                {/* Skills */}
+
                 <div
                   className="application-detail-row"
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    gap: "20px",
+                    gap: "24px",
                     padding: "12px 0",
                     borderBottom:
                       "1px solid #e5e7eb",
+                    boxSizing: "border-box",
                   }}
                 >
-                  <span>Skills</span>
+                  <span
+                    style={{
+                      flex: "0 0 120px",
+                      color: "#64748b",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Skills
+                  </span>
 
                   <strong
                     style={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
+                      maxWidth: "70%",
                       textAlign: "right",
+                      color: "#111827",
                       overflowWrap: "anywhere",
-                      maxWidth: "65%",
+                      wordBreak: "break-word",
+                      fontSize: "14px",
                     }}
                   >
-                    {Array.isArray(application.skills)
-                      ? application.skills.join(", ")
-                      : application.skills}
+                    {skills}
                   </strong>
                 </div>
               </section>
 
-              {/* -------------------------------- */}
-              {/* ABOUT ME */}
-              {/* -------------------------------- */}
+              {/* =================================================
+                  ABOUT ME
+              ================================================= */}
 
               <section
                 className="application-details-section"
                 style={{
-                  marginBottom: "8px",
                   width: "100%",
+                  margin: "0",
+                  padding: 0,
+                  boxSizing: "border-box",
                 }}
               >
                 <Text
@@ -654,7 +856,10 @@ export function ApplicationDetailsModal({
                   weight="semibold"
                   style={{
                     display: "block",
-                    marginBottom: "12px",
+                    margin: "0 0 14px",
+                    padding: 0,
+                    color: "#111827",
+                    lineHeight: 1.4,
                   }}
                 >
                   About Me
@@ -663,47 +868,20 @@ export function ApplicationDetailsModal({
                 <div
                   className="application-about-me"
                   style={{
+                    width: "100%",
+                    maxWidth: "100%",
                     padding: "16px",
+                    margin: 0,
                     borderRadius: "8px",
                     backgroundColor: "#f8fafc",
-                    lineHeight: 1.6,
+                    color: "#334155",
+                    lineHeight: 1.7,
                     overflowWrap: "anywhere",
+                    wordBreak: "break-word",
+                    boxSizing: "border-box",
+                    fontSize: "14px",
                   }}
                 >
-                  <style>
-                    {`
-                      .application-about-me p {
-                        margin: 0 0 10px;
-                      }
-
-                      .application-about-me p:last-child {
-                        margin-bottom: 0;
-                      }
-
-                      .application-about-me ul,
-                      .application-about-me ol {
-                        margin: 10px 0;
-                        padding-left: 24px;
-                      }
-
-                      .application-about-me li {
-                        margin-bottom: 4px;
-                      }
-
-                      .application-about-me a {
-                        color: #2563eb;
-                        text-decoration: underline;
-                      }
-
-                      .application-about-me blockquote {
-                        margin: 12px 0;
-                        padding-left: 16px;
-                        border-left: 4px solid #2563eb;
-                        color: #475569;
-                      }
-                    `}
-                  </style>
-
                   <div
                     dangerouslySetInnerHTML={{
                       __html: application.aboutMe,
@@ -714,10 +892,27 @@ export function ApplicationDetailsModal({
             </div>
           </DialogContent>
 
-          {/* FIXED ACTION BUTTONS */}
+          {/* =================================================
+              FIXED ACTION BUTTONS
+          ================================================= */}
 
           <DialogActions
             className="application-dialog-actions"
+            style={{
+              flexShrink: 0,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: "8px",
+              flexWrap: "wrap",
+              padding: "16px 24px",
+              margin: 0,
+              borderTop: "1px solid #e5e7eb",
+              backgroundColor: "#ffffff",
+              position: "relative",
+              zIndex: 3,
+              boxSizing: "border-box",
+            }}
           >
             <Button
               className="application-dialog-button"

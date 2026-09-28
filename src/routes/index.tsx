@@ -8,15 +8,54 @@ import { JobList } from "../components/jobs/JobList";
 
 import type { JobApplication } from "../store/applicationStore";
 
+/* =========================================================
+   URL SEARCH PARAMETERS
+========================================================= */
+
+type SearchParams = {
+  search?: string;
+  job?: string;
+  application?: string;
+};
+
+/* =========================================================
+   ROUTE
+========================================================= */
+
 export const Route = createFileRoute("/")({
+  validateSearch: (search): SearchParams => ({
+    search:
+      typeof search.search === "string"
+        ? search.search
+        : undefined,
+
+    job:
+      typeof search.job === "string"
+        ? search.job
+        : undefined,
+
+    application:
+      typeof search.application === "string"
+        ? search.application
+        : undefined,
+  }),
+
   component: HomePage,
 });
+
+/* =========================================================
+   HOME PAGE
+========================================================= */
 
 function HomePage() {
   const [selectedApplication, setSelectedApplication] =
     useState<JobApplication | null>(null);
 
   const [detailsOpen, setDetailsOpen] = useState(false);
+
+  /* =======================================================
+     VIEW APPLICATION
+  ======================================================= */
 
   const handleViewApplication = (
     application: JobApplication
@@ -25,19 +64,29 @@ function HomePage() {
     setDetailsOpen(true);
   };
 
+  /* =======================================================
+     CLOSE APPLICATION DETAILS
+  ======================================================= */
+
   const handleCloseDetails = () => {
     setDetailsOpen(false);
     setSelectedApplication(null);
   };
 
+  /* =======================================================
+     RENDER
+  ======================================================= */
+
   return (
     <main className="home-page">
+
       {/* =========================================
           HERO / WELCOME
       ========================================= */}
 
       <section className="dashboard-hero">
         <div className="dashboard-hero-content">
+
           <span className="dashboard-eyebrow">
             JOB PORTAL
           </span>
@@ -50,6 +99,7 @@ function HomePage() {
             Discover opportunities, track applications,
             and manage your job search in one place.
           </p>
+
         </div>
       </section>
 
@@ -88,6 +138,7 @@ function HomePage() {
         application={selectedApplication}
         onClose={handleCloseDetails}
       />
+
     </main>
   );
 }

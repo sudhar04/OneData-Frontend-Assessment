@@ -20,6 +20,7 @@
     "lucide-react": "^1.48.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-quill": "^2.0.0",
     "react-select": "^5.10.2",
     "zod": "^4.6.5",
     "zustand": "^5.0.15"

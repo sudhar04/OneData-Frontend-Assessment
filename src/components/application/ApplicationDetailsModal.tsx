@@ -107,6 +107,7 @@ export function ApplicationDetailsModal({
             .row {
               display: flex;
               justify-content: space-between;
+              align-items: flex-start;
               gap: 20px;
               padding: 10px 0;
               border-bottom: 1px solid #e5e7eb;
@@ -114,6 +115,7 @@ export function ApplicationDetailsModal({
 
             .row span {
               color: #64748b;
+              flex-shrink: 0;
             }
 
             .row strong {
@@ -123,8 +125,29 @@ export function ApplicationDetailsModal({
 
             .about-me {
               line-height: 1.7;
-              white-space: pre-wrap;
               word-break: break-word;
+            }
+
+            .about-me p {
+              margin: 0 0 10px;
+            }
+
+            .about-me ul,
+            .about-me ol {
+              margin: 10px 0;
+              padding-left: 24px;
+            }
+
+            .about-me a {
+              color: #2563eb;
+              text-decoration: underline;
+            }
+
+            .about-me blockquote {
+              margin: 12px 0;
+              padding-left: 16px;
+              border-left: 4px solid #2563eb;
+              color: #475569;
             }
 
             @media print {
@@ -202,7 +225,9 @@ export function ApplicationDetailsModal({
             <div class="row">
               <span>Skills</span>
               <strong>
-                ${application.skills}
+                ${Array.isArray(application.skills)
+                  ? application.skills.join(", ")
+                  : application.skills}
               </strong>
             </div>
           </div>
@@ -392,6 +417,8 @@ export function ApplicationDetailsModal({
               className="application-details"
               style={{
                 width: "100%",
+                backgroundColor: "#ffffff",
+                padding: "4px",
               }}
             >
               {/* -------------------------------- */}
@@ -604,7 +631,9 @@ export function ApplicationDetailsModal({
                       maxWidth: "65%",
                     }}
                   >
-                    {application.skills}
+                    {Array.isArray(application.skills)
+                      ? application.skills.join(", ")
+                      : application.skills}
                   </strong>
                 </div>
               </section>
@@ -638,11 +667,48 @@ export function ApplicationDetailsModal({
                     borderRadius: "8px",
                     backgroundColor: "#f8fafc",
                     lineHeight: 1.6,
-                    whiteSpace: "pre-wrap",
                     overflowWrap: "anywhere",
                   }}
                 >
-                  {application.aboutMe}
+                  <style>
+                    {`
+                      .application-about-me p {
+                        margin: 0 0 10px;
+                      }
+
+                      .application-about-me p:last-child {
+                        margin-bottom: 0;
+                      }
+
+                      .application-about-me ul,
+                      .application-about-me ol {
+                        margin: 10px 0;
+                        padding-left: 24px;
+                      }
+
+                      .application-about-me li {
+                        margin-bottom: 4px;
+                      }
+
+                      .application-about-me a {
+                        color: #2563eb;
+                        text-decoration: underline;
+                      }
+
+                      .application-about-me blockquote {
+                        margin: 12px 0;
+                        padding-left: 16px;
+                        border-left: 4px solid #2563eb;
+                        color: #475569;
+                      }
+                    `}
+                  </style>
+
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: application.aboutMe,
+                    }}
+                  />
                 </div>
               </section>
             </div>
@@ -650,31 +716,33 @@ export function ApplicationDetailsModal({
 
           {/* FIXED ACTION BUTTONS */}
 
-          <DialogActions className="application-dialog-actions">
-          <Button
-            className="application-dialog-button"
-            appearance="secondary"
-            onClick={handlePrint}
+          <DialogActions
+            className="application-dialog-actions"
           >
-            Print
-          </Button>
+            <Button
+              className="application-dialog-button"
+              appearance="secondary"
+              onClick={handlePrint}
+            >
+              Print
+            </Button>
 
-          <Button
-            className="application-dialog-button"
-            appearance="secondary"
-            onClick={handleDownloadPDF}
-          >
-            Download PDF
-          </Button>
+            <Button
+              className="application-dialog-button"
+              appearance="secondary"
+              onClick={handleDownloadPDF}
+            >
+              Download PDF
+            </Button>
 
-          <Button
-            className="application-dialog-button"
-            appearance="primary"
-            onClick={onClose}
-          >
-            Close
-          </Button>
-        </DialogActions>
+            <Button
+              className="application-dialog-button"
+              appearance="primary"
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </DialogActions>
         </DialogBody>
       </DialogSurface>
     </Dialog>

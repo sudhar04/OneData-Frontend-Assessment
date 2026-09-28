@@ -8,9 +8,12 @@ import {
   DialogTitle,
   Field,
   Input,
-  Textarea,
 } from "@fluentui/react-components";
+
 import { useState } from "react";
+
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import type { ApplicationData } from "../../types/application";
 import { useApplicationStore } from "../../store/applicationStore";
@@ -62,6 +65,33 @@ export function ApplicationModal({
   const [submitted, setSubmitted] = useState(false);
 
   // --------------------------------
+  // React Quill Configuration
+  // --------------------------------
+
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ align: [] }],
+      ["link"],
+      ["clean"],
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "align",
+    "link",
+  ];
+
+  // --------------------------------
   // Validation
   // --------------------------------
 
@@ -94,7 +124,12 @@ export function ApplicationModal({
       newErrors.skills = "Please enter your skills.";
     }
 
-    if (!aboutMe.trim()) {
+    // Remove HTML tags before checking if About Me is empty
+    const plainAboutMe = aboutMe
+      .replace(/<(.|\n)*?>/g, "")
+      .trim();
+
+    if (!plainAboutMe) {
       newErrors.aboutMe = "Please tell us about yourself.";
     }
 
@@ -133,13 +168,13 @@ export function ApplicationModal({
       email: email.trim(),
       phone: phone.trim(),
       skills: skills.trim(),
-      aboutMe: aboutMe.trim(),
+      aboutMe: aboutMe,
     };
 
     // Save application in Zustand
     addApplication(application, jobTitle, company);
 
-    // Keep optional parent callback
+    // Optional parent callback
     onSubmit?.(application);
 
     // Show success screen
@@ -354,23 +389,32 @@ export function ApplicationModal({
                     />
                   </Field>
 
-                  {/* About Me */}
+                  {/* About Me - Rich Text Editor */}
 
                   <Field
                     label="About Me"
                     required
                     validationMessage={errors.aboutMe}
                   >
-                    <Textarea
-                      value={aboutMe}
-                      placeholder="Tell us about yourself..."
-                      resize="vertical"
-                      rows={5}
-                      onChange={(_, data) => {
-                        setAboutMe(data.value);
-                        clearError("aboutMe");
-                      }}
-                    />
+                    <div
+                      className={
+                        errors.aboutMe
+                          ? "application-quill-error"
+                          : "application-quill"
+                      }
+                    >
+                      <ReactQuill
+                        theme="snow"
+                        value={aboutMe}
+                        onChange={(value) => {
+                          setAboutMe(value);
+                          clearError("aboutMe");
+                        }}
+                        modules={quillModules}
+                        formats={quillFormats}
+                        placeholder="Tell us about yourself..."
+                      />
+                    </div>
                   </Field>
 
                 </div>

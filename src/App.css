@@ -2134,3 +2134,285 @@ textarea {
     align-self: flex-start;
   }
 }
+
+/* ================================
+   Rich Text Editor
+================================ */
+
+.application-modal .ql-container {
+  min-height: 180px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.application-modal .ql-editor {
+  min-height: 180px;
+}
+
+/* ================================
+   Rendered About Me
+================================ */
+
+.application-about-me {
+  line-height: 1.7;
+  color: #334155;
+  font-size: 14px;
+}
+
+.application-about-me p {
+  margin: 0 0 10px;
+}
+
+.application-about-me strong {
+  font-weight: 700;
+}
+
+.application-about-me em {
+  font-style: italic;
+}
+
+.application-about-me u {
+  text-decoration: underline;
+}
+
+.application-about-me ul,
+.application-about-me ol {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+.application-about-me a {
+  text-decoration: underline;
+}
+
+/* =========================================
+   APPLICATION DETAILS MODAL
+========================================= */
+
+.application-details-dialog {
+  max-width: 850px;
+  width: 90vw;
+}
+
+.application-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.application-details-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #2563eb;
+  margin-bottom: 5px;
+}
+
+.application-details-heading {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.application-details-content {
+  padding-top: 10px;
+}
+
+/* Job */
+
+.application-details-job {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.application-details-job-logo {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.application-details-job h3 {
+  margin: 0 0 5px;
+  font-size: 20px;
+}
+
+.application-details-job p {
+  margin: 0 0 8px;
+  color: #64748b;
+}
+
+.application-status-badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Sections */
+
+.application-details-section {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.application-details-section:last-child {
+  border-bottom: none;
+}
+
+.application-details-section-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Applicant Grid */
+
+.application-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.application-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.application-detail-label {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.application-detail-item strong {
+  color: #1e293b;
+  word-break: break-word;
+}
+
+/* Skills */
+
+.application-details-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.application-skill-tag {
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* About Me */
+
+.application-about-me {
+  padding: 18px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #334155;
+  line-height: 1.7;
+}
+
+.application-about-me h1,
+.application-about-me h2,
+.application-about-me h3 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.application-about-me p {
+  margin: 8px 0;
+}
+
+.application-about-me ul,
+.application-about-me ol {
+  padding-left: 25px;
+}
+
+.application-about-me a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Actions */
+
+.application-details-actions {
+  gap: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .application-details-dialog {
+    width: 95vw;
+  }
+
+  .application-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .application-details-job {
+    align-items: flex-start;
+  }
+
+  .application-details-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* =========================================
+   PRINT
+========================================= */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .application-details-dialog,
+  .application-details-dialog * {
+    visibility: visible;
+  }
+
+  .application-details-dialog {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  .application-details-actions,
+  .application-close-button {
+    display: none !important;
+  }
+
+  .application-details-content {
+    padding: 20px;
+  }
+}

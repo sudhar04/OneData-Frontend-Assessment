@@ -3258,3 +3258,457 @@ body.modal-open {
     padding: 14px 18px !important;
   }
 }
+/* =========================================================
+   APPLICATION DETAILS MODAL
+   RESPONSIVE FIX
+========================================================= */
+
+.application-details-dialog {
+  width: min(760px, calc(100vw - 32px)) !important;
+  max-width: 760px !important;
+
+  height: min(720px, calc(100dvh - 32px)) !important;
+  max-height: calc(100dvh - 32px) !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  overflow: hidden !important;
+
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 25px 60px rgba(15, 23, 42, 0.22),
+    0 8px 24px rgba(15, 23, 42, 0.10) !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.application-details-dialog-body {
+  display: flex !important;
+  flex-direction: column !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.application-details-dialog .fui-DialogTitle {
+  flex: 0 0 auto !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+  padding: 20px 24px 16px !important;
+
+  color: #111827 !important;
+
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+
+  border-bottom: 1px solid #e5e7eb !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.application-details-dialog-content {
+  flex: 1 1 auto !important;
+
+  width: 100% !important;
+
+  min-width: 0 !important;
+  min-height: 0 !important;
+
+  height: auto !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  padding: 24px !important;
+
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+
+  background: #ffffff !important;
+
+  box-sizing: border-box !important;
+
+  overscroll-behavior: contain;
+}
+
+
+/* =========================================================
+   CONTENT SCROLLBAR
+========================================================= */
+
+.application-details-dialog-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.application-details-dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.application-details-dialog-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+.application-details-dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   DETAILS CONTENT
+========================================================= */
+
+.application-details {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   DETAILS SECTIONS
+========================================================= */
+
+.application-details-section {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin-bottom: 24px !important;
+  padding: 16px !important;
+
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+
+  background: #ffffff !important;
+
+  box-sizing: border-box !important;
+
+  overflow: hidden;
+}
+
+.application-details-section:last-child {
+  margin-bottom: 0 !important;
+}
+
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
+
+.application-detail-row {
+  display: flex !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+
+  gap: 20px !important;
+
+  padding: 12px 0 !important;
+
+  border-bottom: 1px solid #e5e7eb !important;
+
+  box-sizing: border-box !important;
+}
+
+.application-detail-row:last-child {
+  border-bottom: none !important;
+}
+
+
+/* LABEL */
+
+.application-detail-row > span {
+  flex: 0 0 120px !important;
+
+  min-width: 0 !important;
+
+  color: #64748b !important;
+
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+
+/* VALUE */
+
+.application-detail-row > strong {
+  flex: 1 1 auto !important;
+
+  min-width: 0 !important;
+  max-width: calc(100% - 140px) !important;
+
+  color: #111827 !important;
+
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+
+  text-align: right !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+
+/* =========================================================
+   ABOUT ME
+========================================================= */
+
+.application-about-me {
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 0 !important;
+  padding: 16px !important;
+
+  border-radius: 8px !important;
+
+  background: #f8fafc !important;
+
+  color: #334155 !important;
+
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+
+  box-sizing: border-box !important;
+}
+
+.application-about-me * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.application-about-me p {
+  margin-top: 0;
+}
+
+
+/* =========================================================
+   FOOTER / ACTIONS
+========================================================= */
+
+.application-details-dialog .fui-DialogActions {
+  flex: 0 0 auto !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  gap: 10px !important;
+
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 14px 24px !important;
+
+  border-top: 1px solid #e5e7eb !important;
+
+  background: #ffffff !important;
+
+  box-sizing: border-box !important;
+
+  flex-wrap: wrap !important;
+}
+
+
+.application-details-dialog .fui-DialogActions button {
+  min-width: 90px !important;
+  min-height: 40px !important;
+
+  padding: 0 16px !important;
+
+  border-radius: 8px !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .application-details-dialog {
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+
+    height: min(720px, calc(100dvh - 24px)) !important;
+    max-height: calc(100dvh - 24px) !important;
+
+    border-radius: 14px !important;
+  }
+
+  .application-details-dialog .fui-DialogTitle {
+    padding: 18px 20px 15px !important;
+
+    font-size: 20px !important;
+  }
+
+  .application-details-dialog-content {
+    padding: 18px !important;
+  }
+
+  .application-details-section {
+    padding: 15px !important;
+  }
+
+  .application-detail-row {
+    gap: 16px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .application-details-dialog {
+    width: calc(100vw - 16px) !important;
+    max-width: none !important;
+
+    height: calc(100dvh - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
+
+    border-radius: 12px !important;
+  }
+
+  .application-details-dialog .fui-DialogTitle {
+    padding: 16px !important;
+
+    font-size: 19px !important;
+  }
+
+  .application-details-dialog-content {
+    padding: 14px !important;
+  }
+
+  .application-details-section {
+    margin-bottom: 16px !important;
+    padding: 14px !important;
+
+    border-radius: 10px !important;
+  }
+
+  .application-detail-row {
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
+    gap: 4px !important;
+
+    padding: 10px 0 !important;
+  }
+
+  .application-detail-row > span {
+    flex: none !important;
+
+    width: 100% !important;
+
+    font-size: 13px !important;
+  }
+
+  .application-detail-row > strong {
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    text-align: left !important;
+
+    font-size: 14px !important;
+  }
+
+  .application-about-me {
+    padding: 14px !important;
+  }
+
+  .application-details-dialog .fui-DialogActions {
+    padding: 12px 14px !important;
+
+    gap: 8px !important;
+  }
+
+  .application-details-dialog .fui-DialogActions button {
+    flex: 1 1 0 !important;
+
+    min-width: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .application-details-dialog {
+    width: calc(100vw - 10px) !important;
+
+    height: calc(100dvh - 10px) !important;
+    max-height: calc(100dvh - 10px) !important;
+
+    border-radius: 10px !important;
+  }
+
+  .application-details-dialog-content {
+    padding: 10px !important;
+  }
+
+  .application-details-section {
+    padding: 12px !important;
+  }
+
+  .application-details-dialog .fui-DialogActions {
+    padding: 10px !important;
+  }
+}

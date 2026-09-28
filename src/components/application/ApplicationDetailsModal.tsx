@@ -409,35 +409,8 @@ export function ApplicationDetailsModal({
         }
       }}
     >
-      <DialogSurface
-        className="application-details-dialog"
-        style={{
-          width: "min(760px, calc(100vw - 32px))",
-          maxWidth: "760px",
-          height: "min(760px, calc(100vh - 32px))",
-          maxHeight: "calc(100vh - 32px)",
-          margin: "16px auto",
-          padding: 0,
-          overflow: "hidden",
-          position: "relative",
-          zIndex: 10000,
-          borderRadius: "12px",
-          backgroundColor: "#ffffff",
-          boxSizing: "border-box",
-        }}
-      >
-        <DialogBody
-          style={{
-            height: "100%",
-            maxHeight: "100%",
-            padding: 0,
-            margin: 0,
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            boxSizing: "border-box",
-          }}
-        >
+      <DialogSurface className="application-details-dialog">
+        <DialogBody className="application-details-dialog-body">
           {/* =================================================
               HEADER
           ================================================= */}
@@ -470,19 +443,7 @@ export function ApplicationDetailsModal({
               SCROLLABLE CONTENT
           ================================================= */}
 
-          <DialogContent
-            style={{
-              flex: "1 1 auto",
-              minHeight: 0,
-              height: "100%",
-              overflowY: "auto",
-              overflowX: "hidden",
-              padding: "24px",
-              margin: 0,
-              backgroundColor: "#ffffff",
-              boxSizing: "border-box",
-            }}
-          >
+          <DialogContent className="application-details-dialog-content">
             <div
               id="application-print-area"
               className="application-details"

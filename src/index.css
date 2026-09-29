@@ -4077,3 +4077,413 @@ body.modal-open {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
+
+
+/* =========================================================
+   PREMIUM CLEAR ALL DIALOG
+   ========================================================= */
+
+.premium-confirm-dialog {
+  width: min(520px, calc(100vw - 32px)) !important;
+  max-width: 520px !important;
+
+  border-radius: 24px !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.18),
+    0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.premium-confirm-body {
+  padding: 0 !important;
+  position: relative;
+}
+
+
+/* =========================================================
+   TOP ACCENT
+   ========================================================= */
+
+.premium-dialog-accent {
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #ef4444 0%,
+    #f97316 50%,
+    #ef4444 100%
+  );
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.premium-dialog-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 28px 30px 22px;
+}
+
+
+.premium-warning-icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  color: #dc2626;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff1f2,
+      #ffe4e6
+    );
+
+  border: 1px solid #fecdd3;
+
+  box-shadow:
+    0 8px 20px rgba(220, 38, 38, 0.12);
+}
+
+
+.premium-dialog-title-wrap {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.premium-dialog-eyebrow {
+  font-size: 10px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  color: #ef4444;
+}
+
+
+.premium-dialog-title {
+  margin: 0 !important;
+
+  font-size: 23px !important;
+
+  line-height: 1.25 !important;
+
+  font-weight: 750 !important;
+
+  letter-spacing: -0.025em;
+
+  color: #0f172a !important;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.premium-dialog-content {
+  padding: 0 30px 26px !important;
+}
+
+
+.premium-dialog-description {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  max-width: 430px;
+}
+
+
+/* =========================================================
+   WARNING BOX
+   ========================================================= */
+
+.premium-warning-box {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-top: 22px;
+
+  padding: 15px 16px;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7ed 0%,
+      #fff1f2 100%
+    );
+
+  border: 1px solid #fed7aa;
+}
+
+
+.premium-warning-box-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  color: #ea580c;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  border: 1px solid rgba(234, 88, 12, 0.12);
+}
+
+
+.premium-warning-box strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #9a3412;
+
+  font-size: 13px;
+
+  font-weight: 750;
+}
+
+
+.premium-warning-box p {
+  margin: 0;
+
+  color: #7c2d12;
+
+  font-size: 12px;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.premium-dialog-actions {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: flex-end !important;
+
+  gap: 10px !important;
+
+  padding: 18px 30px 24px !important;
+
+  margin: 0 !important;
+
+  border-top: 1px solid #eef2f7;
+
+  background: #fafbfc;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+   ========================================================= */
+
+.premium-cancel-button {
+  min-width: 96px !important;
+
+  height: 42px !important;
+
+  border-radius: 11px !important;
+
+  border: 1px solid #dbe2ea !important;
+
+  background: #ffffff !important;
+
+  color: #334155 !important;
+
+  font-size: 13px !important;
+
+  font-weight: 650 !important;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+
+.premium-cancel-button:hover {
+  background: #f8fafc !important;
+
+  border-color: #cbd5e1 !important;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   CLEAR ALL BUTTON
+   ========================================================= */
+
+.premium-clear-button {
+  min-width: 125px !important;
+
+  height: 42px !important;
+
+  border-radius: 11px !important;
+
+  border: 1px solid #dc2626 !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ef4444,
+      #dc2626
+    ) !important;
+
+  color: #ffffff !important;
+
+  font-size: 13px !important;
+
+  font-weight: 700 !important;
+
+  box-shadow:
+    0 7px 18px rgba(220, 38, 38, 0.22) !important;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease !important;
+}
+
+
+.premium-clear-button:hover {
+  filter: brightness(0.97);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 10px 24px rgba(220, 38, 38, 0.28) !important;
+}
+
+
+.premium-clear-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .premium-confirm-dialog {
+    width: calc(100vw - 24px) !important;
+
+    max-width: none !important;
+
+    border-radius: 20px !important;
+  }
+
+
+  .premium-dialog-header {
+    padding: 23px 20px 18px;
+
+    gap: 13px;
+  }
+
+
+  .premium-warning-icon {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 14px;
+  }
+
+
+  .premium-dialog-title {
+    font-size: 19px !important;
+  }
+
+
+  .premium-dialog-content {
+    padding: 0 20px 22px !important;
+  }
+
+
+  .premium-dialog-description {
+    font-size: 14px;
+
+    line-height: 1.65;
+  }
+
+
+  .premium-warning-box {
+    margin-top: 18px;
+
+    padding: 13px;
+  }
+
+
+  .premium-dialog-actions {
+    padding: 15px 20px 19px !important;
+
+    gap: 8px !important;
+  }
+
+
+  .premium-cancel-button,
+  .premium-clear-button {
+    height: 40px !important;
+  }
+}

@@ -19,6 +19,8 @@ import {
   Search,
   Trash2,
   Trash,
+  AlertTriangle,
+  ShieldAlert,
 } from "lucide-react";
 
 import { useApplicationStore } from "../../store/applicationStore";
@@ -727,64 +729,99 @@ export function ApplicationList({
          Clear All Confirmation
       =================================================== */}
 
-      <Dialog
-        open={clearDialogOpen}
-        onOpenChange={(_, data) => {
-          setClearDialogOpen(data.open);
-        }}
-      >
-        <DialogSurface>
-          <DialogBody>
+     {/* ===================================================
+   Premium Clear All Confirmation
+=================================================== */}
 
-            <DialogTitle>
-              Clear All Applications
-            </DialogTitle>
+<Dialog
+  open={clearDialogOpen}
+  onOpenChange={(_, data) => {
+    setClearDialogOpen(data.open);
+  }}
+>
+  <DialogSurface className="premium-confirm-dialog">
+    <DialogBody className="premium-confirm-body">
 
-            <DialogContent>
+      {/* Top accent */}
+      <div className="premium-dialog-accent" />
 
-              <Text block>
-                Are you sure you want to
-                remove all of your submitted
-                applications?
-              </Text>
+      {/* Header */}
+      <div className="premium-dialog-header">
 
-              <Text
-                size={300}
-                block
-                style={{
-                  marginTop: "8px",
-                }}
-              >
-                This action cannot be undone.
-              </Text>
+        <div className="premium-warning-icon">
+          <AlertTriangle size={24} strokeWidth={2.2} />
+        </div>
 
-            </DialogContent>
+        <div className="premium-dialog-title-wrap">
+          <span className="premium-dialog-eyebrow">
+            DESTRUCTIVE ACTION
+          </span>
 
-            <DialogActions>
+          <DialogTitle className="premium-dialog-title">
+            Clear All Applications
+          </DialogTitle>
+        </div>
 
-              <Button
-                appearance="secondary"
-                onClick={() =>
-                  setClearDialogOpen(false)
-                }
-              >
-                Cancel
-              </Button>
+      </div>
 
-              <Button
-                appearance="primary"
-                onClick={
-                  handleConfirmClearAll
-                }
-              >
-                Clear All
-              </Button>
+      {/* Content */}
+      <DialogContent className="premium-dialog-content">
 
-            </DialogActions>
+        <p className="premium-dialog-description">
+          Are you sure you want to remove all of your
+          submitted applications?
+        </p>
 
-          </DialogBody>
-        </DialogSurface>
-      </Dialog>
+        {/* Warning box */}
+        <div className="premium-warning-box">
+
+          <div className="premium-warning-box-icon">
+            <ShieldAlert
+              size={18}
+              strokeWidth={2}
+            />
+          </div>
+
+          <div>
+            <strong>Permanent action</strong>
+
+            <p>
+              This action cannot be undone. All submitted
+              application records will be removed.
+            </p>
+          </div>
+
+        </div>
+
+      </DialogContent>
+
+      {/* Actions */}
+      <DialogActions className="premium-dialog-actions">
+
+        <Button
+          appearance="secondary"
+          className="premium-cancel-button"
+          onClick={() => {
+            setClearDialogOpen(false);
+          }}
+        >
+          Cancel
+        </Button>
+
+        <Button
+          appearance="primary"
+          className="premium-clear-button"
+          icon={<Trash2 size={17} />}
+          onClick={handleConfirmClearAll}
+        >
+          Clear All
+        </Button>
+
+      </DialogActions>
+
+    </DialogBody>
+  </DialogSurface>
+</Dialog>
     </>
   );
 }
